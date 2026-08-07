@@ -1720,7 +1720,6 @@ const ballonDorHistory = {
     2025: "Ousmane Dembélé"
 };
 
-
 // ============================================================
 // GAME STATE
 // ============================================================
@@ -1731,7 +1730,6 @@ let selectedPlayers = [];
 
 let currentFilter = "ALL";
 
-
 // ============================================================
 // TWO-TEAM MATCH STATE
 // ============================================================
@@ -1741,6 +1739,78 @@ let team2 = null;
 
 let buildingTeamNumber = 1;
 
+// ============================================================
+// FORMATION POSITION MAP
+// ============================================================
+
+const formationPositions = {
+
+    "4-3-3": [
+        "GK",
+        "DEF", "DEF", "DEF", "DEF",
+        "MID", "MID", "MID",
+        "FWD", "FWD", "FWD"
+    ],
+
+    "4-4-2": [
+        "GK",
+        "DEF", "DEF", "DEF", "DEF",
+        "MID", "MID", "MID", "MID",
+        "FWD", "FWD"
+    ],
+
+    "4-2-3-1": [
+        "GK",
+        "DEF", "DEF", "DEF", "DEF",
+        "MID", "MID",
+        "MID", "MID", "MID",
+        "FWD"
+    ],
+
+    "3-5-2": [
+        "GK",
+        "DEF", "DEF", "DEF",
+        "MID", "MID", "MID", "MID", "MID",
+        "FWD", "FWD"
+    ]
+
+};
+
+// ============================================================
+// FORMATION REQUIREMENTS
+// ============================================================
+
+const formationRequirements = {
+
+    "4-3-3": {
+        GK: 1,
+        DEF: 4,
+        MID: 3,
+        FWD: 3
+    },
+
+    "4-4-2": {
+        GK: 1,
+        DEF: 4,
+        MID: 4,
+        FWD: 2
+    },
+
+    "4-2-3-1": {
+        GK: 1,
+        DEF: 4,
+        MID: 4,
+        FWD: 2
+    },
+
+    "3-5-2": {
+        GK: 1,
+        DEF: 3,
+        MID: 5,
+        FWD: 2
+    }
+
+};
 
 // ============================================================
 // PLAYER OVR CALCULATOR
@@ -1755,54 +1825,53 @@ function calculatePlayerOVR(player) {
     if (player.position === "FWD") {
 
         return (
-            0.30 * player.shooting +
-            0.20 * player.dribbling +
-            0.20 * player.pace +
-            0.15 * player.passing +
-            0.10 * player.stamina +
-            0.05 * player.defending
+            0.30 * Number(player.shooting || 0) +
+            0.20 * Number(player.dribbling || 0) +
+            0.20 * Number(player.pace || 0) +
+            0.15 * Number(player.passing || 0) +
+            0.10 * Number(player.stamina || 0) +
+            0.05 * Number(player.defending || 0)
         );
     }
 
     if (player.position === "MID") {
 
         return (
-            0.25 * player.passing +
-            0.20 * player.dribbling +
-            0.20 * player.stamina +
-            0.15 * player.shooting +
-            0.10 * player.pace +
-            0.10 * player.defending
+            0.25 * Number(player.passing || 0) +
+            0.20 * Number(player.dribbling || 0) +
+            0.20 * Number(player.stamina || 0) +
+            0.15 * Number(player.shooting || 0) +
+            0.10 * Number(player.pace || 0) +
+            0.10 * Number(player.defending || 0)
         );
     }
 
     if (player.position === "DEF") {
 
         return (
-            0.35 * player.defending +
-            0.20 * player.stamina +
-            0.15 * player.pace +
-            0.15 * player.passing +
-            0.10 * player.dribbling +
-            0.05 * player.shooting
+            0.35 * Number(player.defending || 0) +
+            0.20 * Number(player.stamina || 0) +
+            0.15 * Number(player.pace || 0) +
+            0.15 * Number(player.passing || 0) +
+            0.10 * Number(player.dribbling || 0) +
+            0.05 * Number(player.shooting || 0)
         );
     }
 
     if (player.position === "GK") {
 
         return (
-            0.50 * player.goalkeeping +
-            0.15 * player.defending +
-            0.15 * player.passing +
-            0.10 * player.stamina +
-            0.05 * player.pace +
-            0.05 * player.dribbling
+            0.50 * Number(player.goalkeeping || 0) +
+            0.15 * Number(player.defending || 0) +
+            0.15 * Number(player.passing || 0) +
+            0.10 * Number(player.stamina || 0) +
+            0.05 * Number(player.pace || 0) +
+            0.05 * Number(player.dribbling || 0)
         );
     }
 
     return 0;
 }
-
 
 // ============================================================
 // SCREEN CONTROL
@@ -1820,7 +1889,6 @@ function showScreen(screenID) {
         screen.classList.add("active");
     }
 }
-
 
 // ============================================================
 // START MATCH
@@ -1856,7 +1924,6 @@ function startMatch() {
 
     showScreen("teamScreen");
 }
-
 
 // ============================================================
 // RESET BUILDER
@@ -1911,9 +1978,15 @@ function resetBuilder() {
         teamOVR.textContent = "--";
     }
 
+    const formationText =
+        document.getElementById("selectedFormation");
+
+    if (formationText) {
+        formationText.textContent = "--";
+    }
+
     updatePitch();
 }
-
 
 // ============================================================
 // TEAM SELECTION
@@ -1921,7 +1994,7 @@ function resetBuilder() {
 
 function chooseTeam(team) {
 
-    if (!players[team]) {
+    if (!players || !players[team]) {
 
         console.error("Team not found:", team);
 
@@ -1961,6 +2034,15 @@ function chooseTeam(team) {
         stepNumber.textContent = "2";
     }
 
+    const selectedTeamText =
+        document.getElementById("selectedTeam");
+
+    if (selectedTeamText) {
+        selectedTeamText.textContent = team;
+    }
+
+    updatePitch();
+
     if (formationSection) {
 
         window.scrollTo({
@@ -1970,18 +2052,37 @@ function chooseTeam(team) {
     }
 }
 
-
 // ============================================================
 // FORMATION SELECTION
 // ============================================================
 
 function chooseFormation(formation) {
 
+    if (!formationPositions[formation]) {
+        console.error("Invalid formation:", formation);
+        return;
+    }
+
     selectedFormation = formation;
 
     selectedPlayers = [];
 
-    currentFilter = "ALL";
+    document
+        .querySelectorAll(".formation-grid button")
+        .forEach(function(button) {
+            button.classList.remove("selected");
+
+            if (button.innerText.includes(formation)) {
+                button.classList.add("selected");
+            }
+        });
+
+    const formationText =
+        document.getElementById("selectedFormation");
+
+    if (formationText) {
+        formationText.textContent = formation;
+    }
 
     const playerSection =
         document.getElementById("playerSection");
@@ -2004,18 +2105,8 @@ function chooseFormation(formation) {
         stepNumber.textContent = "3";
     }
 
-    loadPlayers();
-
     updatePitch();
-
-    updateTeamOVR();
-
-    const selectionText =
-        document.getElementById("selectionText");
-
-    if (selectionText) {
-        selectionText.textContent = "0 / 11 players selected";
-    }
+    loadPlayers();
 
     if (playerSection) {
 
@@ -2025,7 +2116,6 @@ function chooseFormation(formation) {
         });
     }
 }
-
 
 // ============================================================
 // PLAYER LIST
@@ -2050,10 +2140,9 @@ function loadPlayers() {
 
     if (currentFilter !== "ALL") {
 
-        teamPlayers =
-            teamPlayers.filter(function(player) {
-                return player.position === currentFilter;
-            });
+        teamPlayers = teamPlayers.filter(function(player) {
+            return player.position === currentFilter;
+        });
     }
 
     teamPlayers.forEach(function(player) {
@@ -2119,7 +2208,6 @@ function loadPlayers() {
     });
 }
 
-
 // ============================================================
 // FILTER PLAYERS
 // ============================================================
@@ -2130,7 +2218,6 @@ function filterPlayers(positionFilter) {
 
     loadPlayers();
 }
-
 
 // ============================================================
 // POSITION NAME
@@ -2157,6 +2244,69 @@ function getPositionName(position) {
     return "Player";
 }
 
+// ============================================================
+// CHECK FORMATION
+// ============================================================
+
+function checkFormationRequirements() {
+
+    if (!selectedFormation) {
+        return false;
+    }
+
+    const requirements =
+        formationRequirements[selectedFormation];
+
+    if (!requirements) {
+        return false;
+    }
+
+    const counts = {
+        GK: 0,
+        DEF: 0,
+        MID: 0,
+        FWD: 0
+    };
+
+    selectedPlayers.forEach(function(player) {
+
+        if (counts[player.position] !== undefined) {
+            counts[player.position]++;
+        }
+    });
+
+    return (
+        counts.GK === requirements.GK &&
+        counts.DEF === requirements.DEF &&
+        counts.MID === requirements.MID &&
+        counts.FWD === requirements.FWD
+    );
+}
+
+// ============================================================
+// FORMATION MESSAGE
+// ============================================================
+
+function getFormationRequirementText() {
+
+    if (!selectedFormation) {
+        return "";
+    }
+
+    const req =
+        formationRequirements[selectedFormation];
+
+    if (!req) {
+        return "";
+    }
+
+    return (
+        `${req.GK} GK • ` +
+        `${req.DEF} DEF • ` +
+        `${req.MID} MID • ` +
+        `${req.FWD} FWD`
+    );
+}
 
 // ============================================================
 // SELECT PLAYER
@@ -2168,11 +2318,38 @@ function selectPlayer(player, card) {
         return;
     }
 
+    if (!selectedFormation) {
+        alert("Choose a formation first.");
+        return;
+    }
+
     if (selectedPlayers.length >= 11) {
         return;
     }
 
     if (selectedPlayers.includes(player)) {
+        return;
+    }
+
+    const requirements =
+        formationRequirements[selectedFormation];
+
+    const currentCount =
+        selectedPlayers.filter(function(selectedPlayer) {
+            return selectedPlayer.position === player.position;
+        }).length;
+
+    if (
+        requirements &&
+        currentCount >= requirements[player.position]
+    ) {
+
+        alert(
+            `Your ${selectedFormation} requires only ` +
+            `${requirements[player.position]} ` +
+            `${getPositionName(player.position)}(s).`
+        );
+
         return;
     }
 
@@ -2184,7 +2361,6 @@ function selectPlayer(player, card) {
     }
 
     updatePitch();
-
     updateTeamOVR();
 
     const selectionText =
@@ -2205,21 +2381,66 @@ function selectPlayer(player, card) {
 
         if (continueButton) {
 
-            continueButton.classList.remove("hidden");
+            if (checkFormationRequirements()) {
 
-            continueButton.scrollIntoView({
-                behavior: "smooth"
-            });
+                continueButton.classList.remove("hidden");
+
+                continueButton.scrollIntoView({
+                    behavior: "smooth"
+                });
+
+            } else {
+
+                continueButton.classList.add("hidden");
+
+                alert(
+                    `The ${selectedFormation} formation requires: ` +
+                    getFormationRequirementText()
+                );
+            }
         }
     }
 }
-
 
 // ============================================================
 // PITCH
 // ============================================================
 
 function updatePitch() {
+
+    const pitch =
+        document.querySelector(".pitch");
+
+    if (!pitch) {
+        return;
+    }
+
+    pitch.classList.remove(
+        "formation-433",
+        "formation-442",
+        "formation-4231",
+        "formation-352"
+    );
+
+    const formationClasses = {
+
+        "4-3-3": "formation-433",
+        "4-4-2": "formation-442",
+        "4-2-3-1": "formation-4231",
+        "3-5-2": "formation-352"
+
+    };
+
+    const formationClass =
+        formationClasses[selectedFormation];
+
+    pitch.classList.add(
+        formationClass || "formation-433"
+    );
+
+    const positions =
+        formationPositions[selectedFormation] ||
+        formationPositions["4-3-3"];
 
     for (let i = 0; i < 11; i++) {
 
@@ -2232,26 +2453,12 @@ function updatePitch() {
 
         position.classList.remove("filled");
 
-        let positionText;
-
-        if (i === 0) {
-            positionText = "GK";
-        }
-        else if (i <= 4) {
-            positionText = "DEF";
-        }
-        else if (i <= 7) {
-            positionText = "MID";
-        }
-        else {
-            positionText = "FWD";
-        }
-
         position.innerHTML = `
-            <span>${positionText}</span>
+            <span>
+                ${positions[i]}
+            </span>
         `;
     }
-
 
     selectedPlayers.forEach(function(player, index) {
 
@@ -2278,7 +2485,6 @@ function updatePitch() {
     });
 }
 
-
 // ============================================================
 // SHORT PLAYER NAME
 // ============================================================
@@ -2295,10 +2501,32 @@ function shortName(name) {
     return parts[parts.length - 1];
 }
 
-
 // ============================================================
 // TEAM OVR
 // ============================================================
+
+function calculateTeamOVR(teamPlayers) {
+
+    if (
+        !Array.isArray(teamPlayers) ||
+        teamPlayers.length === 0
+    ) {
+        return 0;
+    }
+
+    const total =
+        teamPlayers.reduce(
+            function(sum, player) {
+
+                return sum +
+                    calculatePlayerOVR(player);
+
+            },
+            0
+        );
+
+    return total / teamPlayers.length;
+}
 
 function updateTeamOVR() {
 
@@ -2323,7 +2551,6 @@ function updateTeamOVR() {
         average.toFixed(2);
 }
 
-
 // ============================================================
 // FINISH TEAM
 // ============================================================
@@ -2332,7 +2559,19 @@ function finishTeam() {
 
     if (selectedPlayers.length !== 11) {
 
-        alert("You need to select exactly 11 players.");
+        alert(
+            "You need to select exactly 11 players."
+        );
+
+        return;
+    }
+
+    if (!checkFormationRequirements()) {
+
+        alert(
+            `Your ${selectedFormation} formation requires: ` +
+            getFormationRequirementText()
+        );
 
         return;
     }
@@ -2346,23 +2585,20 @@ function finishTeam() {
         players: [...selectedPlayers],
 
         ovr: calculateTeamOVR(selectedPlayers)
-    };
 
+    };
 
     if (buildingTeamNumber === 1) {
 
         team1 = savedTeam;
 
-    }
-    else {
+    } else {
 
         team2 = savedTeam;
-
     }
 
     showTeamSummary(savedTeam);
 }
-
 
 // ============================================================
 // SHOW TEAM SUMMARY
@@ -2382,7 +2618,6 @@ function showTeamSummary(team) {
     const summary =
         document.getElementById("summaryPlayers");
 
-
     if (summaryTeam) {
         summaryTeam.textContent = team.name;
     }
@@ -2392,9 +2627,9 @@ function showTeamSummary(team) {
     }
 
     if (summaryOVR) {
-        summaryOVR.textContent = team.ovr.toFixed(2);
+        summaryOVR.textContent =
+            team.ovr.toFixed(2);
     }
-
 
     if (summary) {
 
@@ -2435,13 +2670,11 @@ function showTeamSummary(team) {
         });
     }
 
-
     const readyMessage =
         document.getElementById("readyMessage");
 
     const nextButton =
         document.getElementById("nextTeamButton");
-
 
     if (buildingTeamNumber === 1) {
 
@@ -2460,8 +2693,7 @@ function showTeamSummary(team) {
                 createSecondTeam;
         }
 
-    }
-    else {
+    } else {
 
         if (readyMessage) {
 
@@ -2479,10 +2711,8 @@ function showTeamSummary(team) {
         }
     }
 
-
     showScreen("readyScreen");
 }
-
 
 // ============================================================
 // CREATE SECOND TEAM
@@ -2504,14 +2734,12 @@ function createSecondTeam() {
     selectedPlayers = [];
     currentFilter = "ALL";
 
-
     const title =
         document.getElementById("builderTitle");
 
     if (title) {
         title.textContent = "CREATE TEAM 2";
     }
-
 
     const nextButton =
         document.getElementById("nextTeamButton");
@@ -2525,42 +2753,115 @@ function createSecondTeam() {
             showComparison;
     }
 
-
     resetBuilder();
 
     showScreen("teamScreen");
 }
 
-
 // ============================================================
-// CALCULATE TEAM OVR
+// V2 - AVERAGE PLAYERS
 // ============================================================
 
-function calculateTeamOVR(teamPlayers) {
+function averagePlayers(playersList, calculator) {
 
-    if (!Array.isArray(teamPlayers) ||
-        teamPlayers.length === 0) {
-
+    if (
+        !Array.isArray(playersList) ||
+        playersList.length === 0
+    ) {
         return 0;
     }
 
     const total =
-        teamPlayers.reduce(
+        playersList.reduce(
             function(sum, player) {
 
-                return sum +
-                    calculatePlayerOVR(player);
+                return sum + calculator(player);
 
             },
             0
         );
 
-    return total / teamPlayers.length;
+    return total / playersList.length;
 }
 
+// ============================================================
+// V2 - PLAYER ATTACK
+// ============================================================
+
+function calculatePlayerAttack(player) {
+
+    if (!player) {
+        return 0;
+    }
+
+    return (
+        0.55 * Number(player.shooting || 0) +
+        0.25 * Number(player.dribbling || 0) +
+        0.20 * Number(player.pace || 0)
+    );
+}
 
 // ============================================================
-// CALCULATE TEAM STATS
+// V2 - PLAYER MIDFIELD
+// ============================================================
+
+function calculatePlayerMidfield(player) {
+
+    if (!player) {
+        return 0;
+    }
+
+    return (
+        0.50 * Number(player.passing || 0) +
+        0.30 * Number(player.dribbling || 0) +
+        0.20 * Number(player.stamina || 0)
+    );
+}
+
+// ============================================================
+// V2 - PLAYER DEFENCE
+// ============================================================
+
+function calculatePlayerDefence(player) {
+
+    if (!player) {
+        return 0;
+    }
+
+    if (player.position === "GK") {
+
+        return (
+            0.65 * Number(player.goalkeeping || 0) +
+            0.20 * Number(player.defending || 0) +
+            0.15 * Number(player.passing || 0)
+        );
+    }
+
+    return (
+        0.70 * Number(player.defending || 0) +
+        0.15 * Number(player.pace || 0) +
+        0.15 * Number(player.stamina || 0)
+    );
+}
+
+// ============================================================
+// V2 - PLAYER PHYSICAL
+// ============================================================
+
+function calculatePlayerPhysical(player) {
+
+    if (!player) {
+        return 0;
+    }
+
+    return (
+        0.55 * Number(player.pace || 0) +
+        0.45 * Number(player.stamina || 0)
+    );
+}
+
+// ============================================================
+// V2 - TEAM STATISTICS
 // ============================================================
 
 function calculateTeamStats(team) {
@@ -2568,64 +2869,235 @@ function calculateTeamStats(team) {
     const stats = {
 
         attack: 0,
-
+        midfield: 0,
         defence: 0,
+        physical: 0,
+        overall: 0
 
-        passing: 0,
-
-        dribbling: 0,
-
-        pace: 0,
-
-        stamina: 0
     };
 
-
-    if (!team ||
+    if (
+        !team ||
         !Array.isArray(team.players) ||
-        team.players.length === 0) {
-
+        team.players.length === 0
+    ) {
         return stats;
     }
 
+    stats.attack =
+        averagePlayers(
+            team.players,
+            calculatePlayerAttack
+        );
 
-    const totalPlayers =
-        team.players.length;
+    stats.midfield =
+        averagePlayers(
+            team.players,
+            calculatePlayerMidfield
+        );
 
+    stats.defence =
+        averagePlayers(
+            team.players,
+            calculatePlayerDefence
+        );
 
-    team.players.forEach(function(player) {
+    stats.physical =
+        averagePlayers(
+            team.players,
+            calculatePlayerPhysical
+        );
 
-        stats.attack +=
-            Number(player.shooting) || 0;
-
-        stats.defence +=
-            Number(player.defending) || 0;
-
-        stats.passing +=
-            Number(player.passing) || 0;
-
-        stats.dribbling +=
-            Number(player.dribbling) || 0;
-
-        stats.pace +=
-            Number(player.pace) || 0;
-
-        stats.stamina +=
-            Number(player.stamina) || 0;
-    });
-
-
-    stats.attack /= totalPlayers;
-    stats.defence /= totalPlayers;
-    stats.passing /= totalPlayers;
-    stats.dribbling /= totalPlayers;
-    stats.pace /= totalPlayers;
-    stats.stamina /= totalPlayers;
-
+    stats.overall =
+        calculateTeamOVR(team.players);
 
     return stats;
 }
 
+// ============================================================
+// MATH HELPERS
+// ============================================================
+
+function clamp(value, minimum, maximum) {
+
+    return Math.max(
+        minimum,
+        Math.min(maximum, value)
+    );
+}
+
+function logistic(value) {
+
+    return 1 /
+        (1 + Math.exp(-value));
+}
+
+// ============================================================
+// V2 - PREDICTION ENGINE
+// ============================================================
+
+function calculatePrediction(stats1, stats2) {
+
+    // --------------------------------------------------------
+    // TEAM STRENGTH
+    // --------------------------------------------------------
+
+    const strength1 =
+
+        0.30 * stats1.overall +
+        0.25 * stats1.attack +
+        0.20 * stats1.midfield +
+        0.15 * stats1.defence +
+        0.10 * stats1.physical;
+
+
+    const strength2 =
+
+        0.30 * stats2.overall +
+        0.25 * stats2.attack +
+        0.20 * stats2.midfield +
+        0.15 * stats2.defence +
+        0.10 * stats2.physical;
+
+
+    const strengthDifference =
+        strength1 - strength2;
+
+
+    // --------------------------------------------------------
+    // EXPECTED GOALS
+    // --------------------------------------------------------
+
+    const xg1 = clamp(
+
+        1.35 +
+
+        0.18 * (
+            stats1.attack -
+            stats2.defence
+        ) +
+
+        0.08 * (
+            stats1.midfield -
+            stats2.midfield
+        ) +
+
+        0.06 * (
+            stats1.overall -
+            stats2.overall
+        ) +
+
+        0.04 * (
+            stats1.physical -
+            stats2.physical
+        ),
+
+        0.20,
+        4.50
+    );
+
+
+    const xg2 = clamp(
+
+        1.35 +
+
+        0.18 * (
+            stats2.attack -
+            stats1.defence
+        ) +
+
+        0.08 * (
+            stats2.midfield -
+            stats1.midfield
+        ) +
+
+        0.06 * (
+            stats2.overall -
+            stats1.overall
+        ) +
+
+        0.04 * (
+            stats2.physical -
+            stats1.physical
+        ),
+
+        0.20,
+        4.50
+    );
+
+
+    // --------------------------------------------------------
+    // DRAW PROBABILITY
+    // --------------------------------------------------------
+
+    const drawProbability =
+        clamp(
+
+            0.34 -
+            0.025 *
+            Math.abs(strengthDifference),
+
+            0.12,
+            0.34
+        );
+
+
+    const nonDrawProbability =
+        1 - drawProbability;
+
+
+    // --------------------------------------------------------
+    // WIN PROBABILITIES
+    // --------------------------------------------------------
+
+    const team1Share =
+        logistic(
+            strengthDifference / 2.5
+        );
+
+
+    const winProbability1 =
+        nonDrawProbability *
+        team1Share;
+
+
+    const winProbability2 =
+        nonDrawProbability *
+        (1 - team1Share);
+
+
+    // --------------------------------------------------------
+    // WINNER
+    // --------------------------------------------------------
+
+    let winner = "DRAW";
+
+    if (winProbability1 > winProbability2) {
+
+        winner = "TEAM1";
+
+    } else if (winProbability2 > winProbability1) {
+
+        winner = "TEAM2";
+    }
+
+
+    return {
+
+        strength1,
+        strength2,
+        strengthDifference,
+
+        winProbability1,
+        drawProbability,
+        winProbability2,
+
+        xg1,
+        xg2,
+
+        winner
+    };
+}
 
 // ============================================================
 // SHOW COMPARISON
@@ -2635,11 +3107,16 @@ function showComparison() {
 
     if (!team1 || !team2) {
 
-        alert("Both teams must be created first.");
+        alert(
+            "Both teams must be created first."
+        );
 
         return;
     }
 
+    // --------------------------------------------------------
+    // TEAM STATS
+    // --------------------------------------------------------
 
     const stats1 =
         calculateTeamStats(team1);
@@ -2648,46 +3125,61 @@ function showComparison() {
         calculateTeamStats(team2);
 
 
-    const compareTeam1 =
-        document.getElementById("compareTeam1");
+    // --------------------------------------------------------
+    // PREDICTION
+    // --------------------------------------------------------
 
-    const compareTeam2 =
-        document.getElementById("compareTeam2");
-
-    if (compareTeam1) {
-        compareTeam1.textContent =
-            team1.name;
-    }
-
-    if (compareTeam2) {
-        compareTeam2.textContent =
-            team2.name;
-    }
+    const prediction =
+        calculatePrediction(
+            stats1,
+            stats2
+        );
 
 
-    const compareOVR1 =
-        document.getElementById("compareOVR1");
+    // --------------------------------------------------------
+    // TEAM NAMES
+    // --------------------------------------------------------
 
-    const compareOVR2 =
-        document.getElementById("compareOVR2");
+    setText(
+        "compareTeam1",
+        team1.name
+    );
 
-    if (compareOVR1) {
+    setText(
+        "compareTeam2",
+        team2.name
+    );
 
-        compareOVR1.textContent =
-            team1.ovr.toFixed(2);
-    }
 
-    if (compareOVR2) {
+    // --------------------------------------------------------
+    // TEAM OVR
+    // --------------------------------------------------------
 
-        compareOVR2.textContent =
-            team2.ovr.toFixed(2);
-    }
+    setText(
+        "compareOVR1",
+        team1.ovr.toFixed(2)
+    );
 
+    setText(
+        "compareOVR2",
+        team2.ovr.toFixed(2)
+    );
+
+
+    // --------------------------------------------------------
+    // TEAM STATISTICS
+    // --------------------------------------------------------
 
     setComparisonStat(
         "attack",
         stats1.attack,
         stats2.attack
+    );
+
+    setComparisonStat(
+        "midfield",
+        stats1.midfield,
+        stats2.midfield
     );
 
     setComparisonStat(
@@ -2697,29 +3189,120 @@ function showComparison() {
     );
 
     setComparisonStat(
-        "passing",
-        stats1.passing,
-        stats2.passing
+        "physical",
+        stats1.physical,
+        stats2.physical
     );
 
     setComparisonStat(
-        "dribbling",
-        stats1.dribbling,
-        stats2.dribbling
+        "overall",
+        stats1.overall,
+        stats2.overall
     );
 
-    setComparisonStat(
-        "pace",
-        stats1.pace,
-        stats2.pace
+
+    // --------------------------------------------------------
+    // PROBABILITY NAMES
+    // --------------------------------------------------------
+
+    setText(
+        "probTeam1Name",
+        team1.name
     );
 
-    setComparisonStat(
-        "stamina",
-        stats1.stamina,
-        stats2.stamina
+    setText(
+        "probTeam2Name",
+        team2.name
     );
 
+
+    // --------------------------------------------------------
+    // PROBABILITY VALUES
+    // --------------------------------------------------------
+
+    setText(
+        "winProb1",
+        formatPercent(
+            prediction.winProbability1
+        )
+    );
+
+    setText(
+        "drawProb",
+        formatPercent(
+            prediction.drawProbability
+        )
+    );
+
+    setText(
+        "winProb2",
+        formatPercent(
+            prediction.winProbability2
+        )
+    );
+
+
+    // --------------------------------------------------------
+    // PROBABILITY BAR
+    // --------------------------------------------------------
+
+    const probBar1 =
+        document.getElementById("probBar1");
+
+    const probBarDraw =
+        document.getElementById("probBarDraw");
+
+    const probBar2 =
+        document.getElementById("probBar2");
+
+
+    if (probBar1) {
+
+        probBar1.style.width =
+            `${prediction.winProbability1 * 100}%`;
+    }
+
+    if (probBarDraw) {
+
+        probBarDraw.style.width =
+            `${prediction.drawProbability * 100}%`;
+    }
+
+    if (probBar2) {
+
+        probBar2.style.width =
+            `${prediction.winProbability2 * 100}%`;
+    }
+
+
+    // --------------------------------------------------------
+    // EXPECTED GOALS
+    // --------------------------------------------------------
+
+    setText(
+        "xgTeam1Name",
+        team1.name
+    );
+
+    setText(
+        "xgTeam2Name",
+        team2.name
+    );
+
+    setText(
+    "xg1",
+    Math.round(prediction.xg1)
+);
+
+setText(
+    "xg2",
+    Math.round(prediction.xg2)
+);
+
+
+    // --------------------------------------------------------
+    // WINNER
+    // --------------------------------------------------------
 
     const winnerText =
         document.getElementById("winnerText");
@@ -2727,63 +3310,256 @@ function showComparison() {
     const winnerReason =
         document.getElementById("winnerReason");
 
+    const modelBreakdown =
+        document.getElementById("modelBreakdown");
 
-    const difference =
-        Math.abs(team1.ovr - team2.ovr);
+
+    let winnerName = "DRAW";
 
 
-    if (team1.ovr > team2.ovr) {
+    if (prediction.winner === "TEAM1") {
 
-        if (winnerText) {
+        winnerName =
+            team1.name;
 
-            winnerText.textContent =
-                `🏆 ${team1.name}`;
-        }
+    } else if (prediction.winner === "TEAM2") {
 
-        if (winnerReason) {
+        winnerName =
+            team2.name;
+    }
+
+
+    if (winnerText) {
+
+        winnerText.textContent =
+
+            prediction.winner === "DRAW"
+
+                ? "🤝 DRAW"
+
+                : `🏆 ${winnerName}`;
+    }
+
+
+    // --------------------------------------------------------
+    // WINNER EXPLANATION
+    // --------------------------------------------------------
+
+    const strengthGap =
+        Math.abs(
+            prediction.strengthDifference
+        );
+
+
+    if (winnerReason) {
+
+        if (prediction.winner === "DRAW") {
 
             winnerReason.textContent =
-                `${team1.name} has the higher mathematical Team OVR by ${difference.toFixed(2)} points.`;
+
+                `The model predicts a draw because the two teams are very close in mathematical strength. The expected goals are ${Math.round(prediction.xg1)} and ${Math.round(prediction.xg2)}.`;
+
+        } else {
+
+            const winningStats =
+
+                prediction.winner === "TEAM1"
+                    ? stats1
+                    : stats2;
+
+
+            const losingStats =
+
+                prediction.winner === "TEAM1"
+                    ? stats2
+                    : stats1;
+
+
+            const reasons = [];
+
+
+            if (
+                winningStats.attack >
+                losingStats.attack
+            ) {
+
+                reasons.push(
+                    "stronger attack"
+                );
+            }
+
+
+            if (
+                winningStats.midfield >
+                losingStats.midfield
+            ) {
+
+                reasons.push(
+                    "stronger midfield"
+                );
+            }
+
+
+            if (
+                winningStats.defence >
+                losingStats.defence
+            ) {
+
+                reasons.push(
+                    "stronger defence"
+                );
+            }
+
+
+            if (
+                winningStats.physical >
+                losingStats.physical
+            ) {
+
+                reasons.push(
+                    "better physical rating"
+                );
+            }
+
+
+            if (
+                winningStats.overall >
+                losingStats.overall
+            ) {
+
+                reasons.push(
+                    "higher overall rating"
+                );
+            }
+
+
+            const reasonText =
+
+                reasons.length > 0
+
+                    ? reasons
+                        .slice(0, 3)
+                        .join(", ")
+
+                    : "the combined mathematical strength score";
+
+
+            const winningProbability =
+
+                prediction.winner === "TEAM1"
+
+                    ? prediction.winProbability1
+
+                    : prediction.winProbability2;
+
+
+            const winningXG =
+
+                prediction.winner === "TEAM1"
+
+                    ? prediction.xg1
+
+                    : prediction.xg2;
+
+
+            winnerReason.textContent =
+
+                `${winnerName} is predicted to win because of ${reasonText}. The model gives them a ${formatPercent(winningProbability)} win probability and an expected ${winningXG.toFixed(2)} goals.`;
         }
     }
 
-    else if (team2.ovr > team1.ovr) {
 
-        if (winnerText) {
+    // --------------------------------------------------------
+    // MODEL BREAKDOWN
+    // --------------------------------------------------------
 
-            winnerText.textContent =
-                `🏆 ${team2.name}`;
-        }
+    if (modelBreakdown) {
 
-        if (winnerReason) {
+        modelBreakdown.innerHTML = `
 
-            winnerReason.textContent =
-                `${team2.name} has the higher mathematical Team OVR by ${difference.toFixed(2)} points.`;
-        }
+            <div>
+
+                <span>
+                    TEAM STRENGTH
+                </span>
+
+                <strong>
+                    ${prediction.strength1.toFixed(2)}
+                    —
+                    ${prediction.strength2.toFixed(2)}
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    STRENGTH GAP
+                </span>
+
+                <strong>
+                    ${strengthGap.toFixed(2)}
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    EXPECTED GOALS
+                </span>
+
+                <strong>
+                    ${Math.round(prediction.xg1)}
+                    —
+                    ${Math.round(prediction.xg2)}
+                </strong>
+
+            </div>
+
+        `;
     }
 
-    else {
 
-        if (winnerText) {
-
-            winnerText.textContent =
-                "🤝 DRAW";
-        }
-
-        if (winnerReason) {
-
-            winnerReason.textContent =
-                "Both teams have exactly the same mathematical Team OVR.";
-        }
-    }
-
+    // --------------------------------------------------------
+    // SHOW COMPARISON SCREEN
+    // --------------------------------------------------------
 
     showScreen("comparisonScreen");
 }
 
+// ============================================================
+// COMPARISON HELPERS
+// ============================================================
+
+function setText(elementID, value) {
+
+    const element =
+        document.getElementById(elementID);
+
+    if (element) {
+
+        element.textContent =
+            value;
+    }
+}
 
 // ============================================================
-// COMPARISON STAT DISPLAY
+// FORMAT PERCENTAGE
+// ============================================================
+
+function formatPercent(value) {
+
+    return (
+        (value * 100).toFixed(1) +
+        "%"
+    );
+}
+
+// ============================================================
+// COMPARISON STAT
 // ============================================================
 
 function setComparisonStat(
@@ -2793,13 +3569,19 @@ function setComparisonStat(
 ) {
 
     const element1 =
-        document.getElementById(`${statName}1`);
+        document.getElementById(
+            `${statName}1`
+        );
 
     const element2 =
-        document.getElementById(`${statName}2`);
+        document.getElementById(
+            `${statName}2`
+        );
 
     const bar =
-        document.getElementById(`${statName}Bar`);
+        document.getElementById(
+            `${statName}Bar`
+        );
 
 
     if (element1) {
@@ -2819,7 +3601,9 @@ function setComparisonStat(
     if (bar) {
 
         const total =
-            value1 + value2;
+            Number(value1) +
+            Number(value2);
+
 
         let percentage = 50;
 
@@ -2827,7 +3611,10 @@ function setComparisonStat(
         if (total > 0) {
 
             percentage =
-                (value1 / total) * 100;
+                (
+                    Number(value1) /
+                    total
+                ) * 100;
         }
 
 
@@ -2835,7 +3622,6 @@ function setComparisonStat(
             `${percentage}%`;
     }
 }
-
 
 // ============================================================
 // BACK BUTTON
@@ -2852,7 +3638,6 @@ function goBackFromBuilder() {
 
     showScreen("homeScreen");
 }
-
 
 // ============================================================
 // RESTART EVERYTHING
@@ -2900,7 +3685,6 @@ function restart() {
 
     showScreen("homeScreen");
 }
-
 
 // ============================================================
 // MAKE FUNCTIONS AVAILABLE TO HTML
