@@ -1372,3 +1372,919 @@ header h2 {
     }
 
 }
+/* ============================================================
+   FOOTBALL MATH — V2
+   STATISTICS + MATHEMATICAL PREDICTION ENGINE
+   ============================================================ */
+
+
+/* ============================================================
+   V2 SECTION TITLES
+   ============================================================ */
+
+.comparison-section-title {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.comparison-section-title span {
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+.comparison-section-title small {
+    color: #718096;
+    font-size: 11px;
+}
+
+
+/* ============================================================
+   V2 TEAM STATISTICS
+   ============================================================ */
+
+.comparison-stats {
+    margin-top: 25px;
+}
+
+
+/* Individual statistic */
+
+.comparison-stat {
+    margin-bottom: 22px;
+}
+
+
+.stat-title {
+    display: grid;
+    grid-template-columns: 60px 1fr 60px;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+
+.stat-name {
+    text-align: center;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+
+.stat-value-left,
+.stat-value-right {
+    font-size: 14px;
+}
+
+
+.stat-value-left {
+    text-align: left;
+    color: #39e6a5;
+}
+
+
+.stat-value-right {
+    text-align: right;
+    color: #4aa3ff;
+}
+
+
+/* Statistic comparison bar */
+
+.stat-bar {
+    width: 100%;
+    height: 10px;
+    background: #172536;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+
+.stat-bar-fill {
+    width: 50%;
+    height: 100%;
+    background: #39e6a5;
+    border-radius: 20px;
+    transition:
+        width 0.8s cubic-bezier(.22, 1, .36, 1);
+}
+
+
+/* ============================================================
+   PROBABILITY CARD
+   ============================================================ */
+
+.probability-card {
+    margin-top: 30px;
+    padding: 30px;
+
+    background: rgba(9, 22, 37, 0.9);
+
+    border: 1px solid rgba(255,255,255,0.07);
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,0.25);
+}
+
+
+/* Probability boxes */
+
+.probability-grid {
+    display: grid;
+
+    grid-template-columns:
+        1fr
+        1fr
+        1fr;
+
+    gap: 15px;
+}
+
+
+.probability-item {
+    padding: 18px;
+
+    text-align: center;
+
+    background: #101f31;
+
+    border-radius: 12px;
+
+    border:
+        1px solid
+        rgba(255,255,255,0.06);
+}
+
+
+.probability-item span {
+    display: block;
+
+    color: #718096;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 8px;
+}
+
+
+.probability-item strong {
+    font-size: 30px;
+
+    color: #39e6a5;
+}
+
+
+.probability-item.draw strong {
+    color: white;
+}
+
+
+/* ============================================================
+   PROBABILITY BAR
+   ============================================================ */
+
+.probability-bar {
+    display: flex;
+
+    width: 100%;
+
+    height: 12px;
+
+    margin-top: 22px;
+
+    overflow: hidden;
+
+    border-radius: 20px;
+
+    background: #172536;
+}
+
+
+#probBar1,
+#probBarDraw,
+#probBar2 {
+    height: 100%;
+
+    transition:
+        width 0.8s cubic-bezier(.22, 1, .36, 1);
+}
+
+
+#probBar1 {
+    width: 33.333%;
+    background: #39e6a5;
+}
+
+
+#probBarDraw {
+    width: 33.333%;
+    background: #718096;
+}
+
+
+#probBar2 {
+    width: 33.333%;
+    background: #4aa3ff;
+}
+
+
+/* ============================================================
+   EXPECTED GOALS
+   ============================================================ */
+
+.xg-card {
+    margin-top: 25px;
+
+    padding: 30px;
+
+    background: rgba(9, 22, 37, 0.9);
+
+    border:
+        1px solid
+        rgba(255,255,255,0.07);
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,0.25);
+}
+
+
+.xg-grid {
+    display: grid;
+
+    grid-template-columns:
+        1fr
+        80px
+        1fr;
+
+    align-items: center;
+
+    text-align: center;
+}
+
+
+.xg-grid > div:not(.xg-vs) span {
+    display: block;
+
+    color: #9eacc0;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    margin-bottom: 8px;
+}
+
+
+.xg-grid > div:not(.xg-vs) strong {
+    display: block;
+
+    font-size: 52px;
+
+    color: #39e6a5;
+}
+
+
+.xg-vs {
+    font-size: 28px;
+
+    color: #718096;
+
+    font-weight: 900;
+}
+
+
+/* ============================================================
+   MATHEMATICAL PREDICTION CARD
+   ============================================================ */
+
+.prediction-card {
+    margin-top: 25px;
+
+    padding: 35px 30px;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(15, 32, 52, 0.98),
+            rgba(7, 17, 31, 0.98)
+        );
+
+    border:
+        1px solid
+        rgba(57,230,165,0.15);
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 20px 50px rgba(0,0,0,0.3);
+}
+
+
+.prediction-card h3 {
+    margin: 0 0 18px;
+
+    color: #718096;
+
+    font-size: 11px;
+
+    letter-spacing: 2px;
+
+    font-weight: 900;
+}
+
+
+#winnerText {
+    font-size: 36px;
+
+    font-weight: 1000;
+
+    letter-spacing: 1px;
+
+    color: #39e6a5;
+
+    margin-bottom: 15px;
+}
+
+
+#winnerReason {
+    max-width: 750px;
+
+    margin: 0 auto;
+
+    color: #9eacc0;
+
+    font-size: 13px;
+
+    line-height: 1.7;
+}
+
+
+/* ============================================================
+   MODEL BREAKDOWN
+   ============================================================ */
+
+.model-breakdown {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 10px;
+
+    max-width: 750px;
+
+    margin: 25px auto 0;
+}
+
+
+.model-breakdown div {
+    padding: 13px;
+
+    background:
+        rgba(7,17,31,0.7);
+
+    border-radius: 10px;
+
+    border:
+        1px solid
+        rgba(255,255,255,0.04);
+}
+
+
+.model-breakdown span {
+    display: block;
+
+    color: #718096;
+
+    font-size: 9px;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 5px;
+}
+
+
+.model-breakdown strong {
+    font-size: 13px;
+
+    color: white;
+}
+
+
+/* ============================================================
+   V2 BUTTONS
+   ============================================================ */
+
+.comparison-buttons {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    margin-top: 30px;
+}
+
+
+.comparison-buttons .primary-btn,
+.comparison-buttons .secondary-btn {
+    margin-top: 0;
+}
+
+
+/* ============================================================
+   SMALL ANIMATION
+   ============================================================ */
+
+@keyframes v2FadeIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+.probability-card,
+.xg-card,
+.prediction-card {
+    animation:
+        v2FadeIn
+        0.5s
+        ease-out;
+}
+
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+
+@media (max-width: 700px) {
+
+    .comparison-section-title {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 5px;
+    }
+
+
+    .probability-grid {
+
+        grid-template-columns: 1fr;
+    }
+
+
+    .probability-card,
+    .xg-card,
+    .prediction-card {
+
+        padding: 22px 15px;
+    }
+
+
+    .stat-title {
+
+        grid-template-columns:
+            45px
+            1fr
+            45px;
+    }
+
+
+    .stat-name {
+
+        font-size: 9px;
+    }
+
+
+    .xg-grid {
+
+        grid-template-columns:
+            1fr
+            45px
+            1fr;
+    }
+
+
+    .xg-grid > div:not(.xg-vs) strong {
+
+        font-size: 38px;
+    }
+
+
+    .model-breakdown {
+
+        grid-template-columns: 1fr;
+    }
+
+
+    .comparison-buttons {
+
+        flex-direction: column;
+    }
+
+
+    #winnerText {
+
+        font-size: 28px;
+    }
+}
+/* ============================================================
+   ACTUAL FORMATION LAYOUTS
+   ============================================================ */
+
+.pitch {
+    position: relative;
+}
+
+
+/* All pitch positions become independently movable */
+
+.pitch .position-row {
+    display: contents;
+}
+
+.pitch {
+    position: relative;
+}
+
+
+.pitch .pitch-position {
+    position: absolute;
+
+    transform:
+        translate(-50%, -50%);
+
+    margin: 0;
+
+    z-index: 5;
+}
+
+
+/* ============================================================
+   4-3-3
+   ============================================================ */
+
+.pitch.formation-433 #position-0 {
+    left: 50%;
+    top: 88%;
+}
+
+
+.pitch.formation-433 #position-1 {
+    left: 15%;
+    top: 68%;
+}
+
+.pitch.formation-433 #position-2 {
+    left: 38%;
+    top: 72%;
+}
+
+.pitch.formation-433 #position-3 {
+    left: 62%;
+    top: 72%;
+}
+
+.pitch.formation-433 #position-4 {
+    left: 85%;
+    top: 68%;
+}
+
+
+.pitch.formation-433 #position-5 {
+    left: 25%;
+    top: 48%;
+}
+
+.pitch.formation-433 #position-6 {
+    left: 50%;
+    top: 52%;
+}
+
+.pitch.formation-433 #position-7 {
+    left: 75%;
+    top: 48%;
+}
+
+
+.pitch.formation-433 #position-8 {
+    left: 22%;
+    top: 25%;
+}
+
+.pitch.formation-433 #position-9 {
+    left: 50%;
+    top: 18%;
+}
+
+.pitch.formation-433 #position-10 {
+    left: 78%;
+    top: 25%;
+}
+
+
+/* ============================================================
+   4-4-2
+   ============================================================ */
+
+.pitch.formation-442 #position-0 {
+    left: 50%;
+    top: 88%;
+}
+
+
+.pitch.formation-442 #position-1 {
+    left: 15%;
+    top: 68%;
+}
+
+.pitch.formation-442 #position-2 {
+    left: 38%;
+    top: 72%;
+}
+
+.pitch.formation-442 #position-3 {
+    left: 62%;
+    top: 72%;
+}
+
+.pitch.formation-442 #position-4 {
+    left: 85%;
+    top: 68%;
+}
+
+
+.pitch.formation-442 #position-5 {
+    left: 15%;
+    top: 48%;
+}
+
+.pitch.formation-442 #position-6 {
+    left: 38%;
+    top: 52%;
+}
+
+.pitch.formation-442 #position-7 {
+    left: 62%;
+    top: 52%;
+}
+
+.pitch.formation-442 #position-8 {
+    left: 85%;
+    top: 48%;
+}
+
+
+.pitch.formation-442 #position-9 {
+    left: 35%;
+    top: 22%;
+}
+
+.pitch.formation-442 #position-10 {
+    left: 65%;
+    top: 22%;
+}
+
+
+/* ============================================================
+   4-2-3-1
+   ============================================================ */
+
+.pitch.formation-4231 #position-0 {
+    left: 50%;
+    top: 88%;
+}
+
+
+.pitch.formation-4231 #position-1 {
+    left: 15%;
+    top: 68%;
+}
+
+.pitch.formation-4231 #position-2 {
+    left: 38%;
+    top: 72%;
+}
+
+.pitch.formation-4231 #position-3 {
+    left: 62%;
+    top: 72%;
+}
+
+.pitch.formation-4231 #position-4 {
+    left: 85%;
+    top: 68%;
+}
+
+
+.pitch.formation-4231 #position-5 {
+    left: 35%;
+    top: 55%;
+}
+
+.pitch.formation-4231 #position-6 {
+    left: 65%;
+    top: 55%;
+}
+
+
+.pitch.formation-4231 #position-7 {
+    left: 20%;
+    top: 35%;
+}
+
+.pitch.formation-4231 #position-8 {
+    left: 50%;
+    top: 32%;
+}
+
+.pitch.formation-4231 #position-9 {
+    left: 80%;
+    top: 35%;
+}
+
+
+.pitch.formation-4231 #position-10 {
+    left: 50%;
+    top: 18%;
+}
+
+
+/* ============================================================
+   3-5-2
+   ============================================================ */
+
+.pitch.formation-352 #position-0 {
+    left: 50%;
+    top: 88%;
+}
+
+
+.pitch.formation-352 #position-1 {
+    left: 25%;
+    top: 68%;
+}
+
+.pitch.formation-352 #position-2 {
+    left: 50%;
+    top: 73%;
+}
+
+.pitch.formation-352 #position-3 {
+    left: 75%;
+    top: 68%;
+}
+
+
+.pitch.formation-352 #position-4 {
+    left: 10%;
+    top: 48%;
+}
+
+.pitch.formation-352 #position-5 {
+    left: 30%;
+    top: 55%;
+}
+
+.pitch.formation-352 #position-6 {
+    left: 50%;
+    top: 48%;
+}
+
+.pitch.formation-352 #position-7 {
+    left: 70%;
+    top: 55%;
+}
+
+.pitch.formation-352 #position-8 {
+    left: 90%;
+    top: 48%;
+}
+
+
+.pitch.formation-352 #position-9 {
+    left: 35%;
+    top: 22%;
+}
+
+.pitch.formation-352 #position-10 {
+    left: 65%;
+    top: 22%;
+}
+/* ============================================================
+   PLAYER FILTER BUTTONS
+   ============================================================ */
+
+.player-filters {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+
+/* Individual filter buttons */
+
+.player-filters button {
+    min-width: 75px;
+    padding: 10px 18px;
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+
+    background: rgba(255, 255, 255, 0.06);
+    color: #b8b8b8;
+
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+/* Hover */
+
+.player-filters button:hover {
+    background: rgba(255, 255, 255, 0.11);
+    color: white;
+
+    border-color: rgba(255, 255, 255, 0.25);
+
+    transform: translateY(-2px);
+}
+
+
+/* Click */
+
+.player-filters button:active {
+    transform: translateY(0);
+}
+
+
+/* Selected filter */
+
+.player-filters button.selected {
+    background: linear-gradient(
+        135deg,
+        #ffffff,
+        #dcdcdc
+    );
+
+    color: #111;
+
+    border-color: white;
+
+    box-shadow:
+        0 5px 18px rgba(255, 255, 255, 0.18);
+
+    transform: translateY(-1px);
+}
+
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+    .player-filters {
+        gap: 7px;
+    }
+
+    .player-filters button {
+        min-width: 60px;
+        padding: 9px 12px;
+        font-size: 12px;
+    }
+}
