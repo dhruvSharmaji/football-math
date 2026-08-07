@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+```
+<title>Football Math</title>
+
+<link rel="stylesheet" href="style.css">
+```
+
+</head>
+
+<body>
+
+```
+<!-- ========================================== -->
+<!-- HOME SCREEN -->
+<!-- ========================================== -->
+
+<section id="homeScreen" class="screen active">
+
+    <div class="hero">
+
+        <div class="ball">⚽</div>
+
+        <h1>
+            FOOTBALL <span>MATH</span>
+        </h1>
+
+        <p>
+            Build your team. Trust the numbers. Prove your strategy.
+        </p>
+
+        <button
+            class="primary-btn"
+            type="button"
+            onclick="startMatch()">
+
+            CREATE MATCH
+
+        </button>
+
+        <p class="version">
+            Version 2.0 • Mathematical Football Simulator
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ========================================== -->
+<!-- TEAM BUILDING SCREEN -->
+<!-- ========================================== -->
+
+<section id="teamScreen" class="screen">
+
+    <header>
+
+        <button
+            class="back-btn"
+            type="button"
+            onclick="showScreen('homeScreen')">
+
+            ←
+
+        </button>
+
+        <h2>CREATE YOUR TEAM</h2>
+
+        <div class="step">
+            STEP <span id="stepNumber">1</span>/3
+        </div>
+
+    </header>
+
+
+    <main class="builder">
+
+
+        <!-- ================================== -->
+        <!-- TEAM SELECTION -->
+        <!-- ================================== -->
+
+        <div class="builder-section">
+
+            <h3>Choose Your Team</h3>
+
+            <div class="team-choice">
+
+
+                <!-- REAL MADRID -->
+
+                <button
+                    class="team-card"
+                    type="button"
+                    onclick="chooseTeam('Real Madrid')">
+
+                    <div class="team-logo">
+                        ⚪
+                    </div>
+
+                    <h3>
+                        Real Madrid
+                    </h3>
+
+                    <p>
+                        Spain
+                    </p>
+
+                </button>
+
+
+                <!-- BARCELONA -->
+
+                <button
+                    class="team-card"
+                    type="button"
+                    onclick="chooseTeam('Barcelona')">
+
+                    <div class="team-logo">
+                        🔵🔴
+                    </div>
+
+                    <h3>
+                        Barcelona
+                    </h3>
+
+                    <p>
+                        Spain
+                    </p>
+
+                </button>
+
+
+                <!-- ALL TIME REAL MADRID -->
+
+                <button
+                    class="team-card"
+                    type="button"
+                    onclick="chooseTeam('All-Time Real Madrid')">
+
+                    <div class="team-logo">
+                        👑
+                    </div>
+
+                    <h3>
+                        All-Time Real Madrid
+                    </h3>
+
+                    <p>
+                        Legends
+                    </p>
+
+                </button>
+
+
+                <!-- ALL TIME BARCELONA -->
+
+                <button
+                    class="team-card"
+                    type="button"
+                    onclick="chooseTeam('All-Time Barcelona')">
+
+                    <div class="team-logo">
+                        🔵🔴
+                    </div>
+
+                    <h3>
+                        All-Time Barcelona
+                    </h3>
+
+                    <p>
+                        Legends
+                    </p>
+
+                </button>
+
+
+                <!-- ALL TIME AC MILAN -->
+
+                <button
+                    class="team-card"
+                    type="button"
+                    onclick="chooseTeam('All-Time AC Milan')">
+
+                    <div class="team-logo">
+                        🔴⚫
+                    </div>
+
+                    <h3>
+                        All-Time AC Milan
+                    </h3>
+
+                    <p>
+                        Legends
+                    </p>
+
+                </button>
+
+
+                <!-- ALL TIME MANCHESTER CITY -->
+
+                <button
+                    class="team-card"
+                    type="button"
+                    onclick="chooseTeam('All-Time Manchester City')">
+
+                    <div class="team-logo">
+                        🔵
+                    </div>
+
+                    <h3>
+                        All-Time Manchester City
+                    </h3>
+
+                    <p>
+                        Legends
+                    </p>
+
+                </button>
+
+
+                <!-- ALL TIME MANCHESTER UNITED -->
+
+                <button
+                    class="team-card"
+                    type="button"
+                    onclick="chooseTeam('All-Time Manchester United')">
+
+                    <div class="team-logo">
+                        🔴
+                    </div>
+
+                    <h3>
+                        All-Time Manchester United
+                    </h3>
+
+                    <p>
+                        Legends
+                    </p>
+
+                </button>
+
+
+                <!-- ALL TIME BAYERN -->
+
+                <button
+                    class="team-card"
+                    type="button"
+                    onclick="chooseTeam('All-Time Bayern Munich')">
+
+                    <div class="team-logo">
+                        🔴⚪
+                    </div>
+
+                    <h3>
+                        All-Time Bayern Munich
+                    </h3>
+
+                    <p>
+                        Legends
+                    </p>
+
+                </button>
+
+
+                <!-- BALLON D'OR LEGENDS -->
+
+                <button
+                    class="team-card"
+                    type="button"
+                    onclick="chooseTeam('Ballon d\'Or Legends')">
+
+                    <div class="team-logo">
+                        🏆
+                    </div>
+
+                    <h3>
+                        Ballon d'Or Legends
+                    </h3>
+
+                    <p>
+                        Winners
+                    </p>
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================================== -->
+        <!-- FORMATION SELECTION -->
+        <!-- ================================== -->
+
+        <div
+            class="builder-section hidden"
+            id="formationSection">
+
+            <h3>
+                Choose Formation
+            </h3>
+
+
+            <div class="formation-grid">
+
+
+                <button
+                    type="button"
+                    onclick="chooseFormation('4-3-3')">
+
+                    <strong>
+                        4-3-3
+                    </strong>
+
+                    <small>
+                        Balanced Attack
+                    </small>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    onclick="chooseFormation('4-4-2')">
+
+                    <strong>
+                        4-4-2
+                    </strong>
+
+                    <small>
+                        Classic
+                    </small>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    onclick="chooseFormation('4-2-3-1')">
+
+                    <strong>
+                        4-2-3-1
+                    </strong>
+
+                    <small>
+                        Control
+                    </small>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    onclick="chooseFormation('3-5-2')">
+
+                    <strong>
+                        3-5-2
+                    </strong>
+
+                    <small>
+                        Midfield
+                    </small>
+
+                </button>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- ================================== -->
+        <!-- PLAYER SELECTION -->
+        <!-- ================================== -->
+
+        <div
+            class="builder-section hidden"
+            id="playerSection">
+
+
+            <div class="selection-header">
+
+                <div>
+
+                    <h3>
+                        Select Your XI
+                    </h3>
+
+                    <p id="selectionText">
+                        0 / 11 players selected
+                    </p>
+
+                </div>
+
+
+                <div class="team-ovr">
+
+                    <span>
+                        TEAM OVR
+                    </span>
+
+                    <strong id="teamOVR">
+                        --
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================================== -->
+            <!-- PITCH -->
+            <!-- ================================== -->
+
+            <div class="pitch">
+
+
+                <!-- GOALKEEPER -->
+
+                <div class="position-row">
+
+                    <div
+                        class="pitch-position"
+                        id="position-0">
+
+                        <span>
+                            GK
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DEFENDERS -->
+
+                <div class="position-row defenders">
+
+                    <div
+                        class="pitch-position"
+                        id="position-1">
+
+                        <span>
+                            DEF
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        class="pitch-position"
+                        id="position-2">
+
+                        <span>
+                            DEF
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        class="pitch-position"
+                        id="position-3">
+
+                        <span>
+                            DEF
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        class="pitch-position"
+                        id="position-4">
+
+                        <span>
+                            DEF
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- MIDFIELDERS -->
+
+                <div class="position-row midfielders">
+
+                    <div
+                        class="pitch-position"
+                        id="position-5">
+
+                        <span>
+                            MID
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        class="pitch-position"
+                        id="position-6">
+
+                        <span>
+                            MID
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        class="pitch-position"
+                        id="position-7">
+
+                        <span>
+                            MID
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- FORWARDS -->
+
+                <div class="position-row attackers">
+
+                    <div
+                        class="pitch-position"
+                        id="position-8">
+
+                        <span>
+                            FWD
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        class="pitch-position"
+                        id="position-9">
+
+                        <span>
+                            FWD
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        class="pitch-position"
+                        id="position-10">
+
+                        <span>
+                            FWD
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================================== -->
+            <!-- POSITION FILTERS -->
+            <!-- ================================== -->
+
+            <div class="player-filters">
+
+                <button
+                    type="button"
+                    onclick="filterPlayers('ALL')">
+
+                    ALL
+
+                </button>
+
+
+                <button
+                    type="button"
+                    onclick="filterPlayers('GK')">
+
+                    GK
+
+                </button>
+
+
+                <button
+                    type="button"
+                    onclick="filterPlayers('DEF')">
+
+                    DEF
+
+                </button>
+
+
+                <button
+                    type="button"
+                    onclick="filterPlayers('MID')">
+
+                    MID
+
+                </button>
+
+
+                <button
+                    type="button"
+                    onclick="filterPlayers('FWD')">
+
+                    FWD
+
+                </button>
+
+            </div>
+
+
+            <!-- ================================== -->
+            <!-- AVAILABLE PLAYERS -->
+            <!-- ================================== -->
+
+            <h3 class="players-title">
+                AVAILABLE PLAYERS
+            </h3>
+
+
+            <div
+                id="playerList"
+                class="player-list">
+
+            </div>
+
+
+        </div>
+
+
+        <!-- ================================== -->
+        <!-- READY BUTTON -->
+        <!-- ================================== -->
+
+        <button
+            id="continueButton"
+            class="primary-btn hidden"
+            type="button"
+            onclick="finishTeam()">
+
+            READY
+
+        </button>
+
+
+    </main>
+
+</section>
+
+
+<!-- ========================================== -->
+<!-- READY SCREEN -->
+<!-- ========================================== -->
+
+<section id="readyScreen" class="screen">
+
+    <div class="ready-container">
+
+
+        <div class="success-icon">
+            ✓
+        </div>
+
+
+        <h1>
+            TEAM READY
+        </h1>
+
+
+        <p>
+            Your mathematical team has been created.
+        </p>
+
+
+        <div class="summary-card">
+
+
+            <h2 id="summaryTeam">
+                Real Madrid
+            </h2>
+
+
+            <div class="summary-formation">
+
+                Formation:
+
+                <strong id="summaryFormation">
+                    4-3-3
+                </strong>
+
+            </div>
+
+
+            <div class="big-ovr">
+
+                <span>
+                    TEAM OVR
+                </span>
+
+                <strong id="summaryOVR">
+                    0.00
+                </strong>
+
+            </div>
+
+
+            <div
+                id="summaryPlayers"
+                class="summary-players">
+
+            </div>
+
+
+        </div>
+
+
+        <button
+            class="secondary-btn"
+            type="button"
+            onclick="restart()">
+
+            BUILD ANOTHER TEAM
+
+        </button>
+
+
+        <p class="coming-soon">
+
+            🔒 Online 1v1 • Managers • Tactics • Match Simulation
+
+            <br>
+
+            Coming in future versions
+
+        </p>
+
+
+    </div>
+
+</section>
+
+
+<!-- ========================================== -->
+<!-- JAVASCRIPT -->
+<!-- ========================================== -->
+
+<script src="script.js"></script>
+```
+
+</body>
+
+</html>
