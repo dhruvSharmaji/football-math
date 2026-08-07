@@ -1,2440 +1,1374 @@
-// ============================================================
-// FOOTBALL MATH
-// COMPLETE SCRIPT.JS
-// ============================================================
-
-
-// ============================================================
-// PLAYER DATABASE
-// ============================================================
-
-const players = {
-
-    // ========================================================
-    // REAL MADRID
-    // ========================================================
-
-    "Real Madrid": [
-
-        {
-            name: "Thibaut Courtois",
-            position: "GK",
-            shooting: 2,
-            passing: 6,
-            dribbling: 3,
-            pace: 4,
-            stamina: 7,
-            defending: 9,
-            goalkeeping: 9
-        },
-
-        {
-            name: "Trent Alexander-Arnold",
-            position: "DEF",
-            shooting: 7,
-            passing: 10,
-            dribbling: 7,
-            pace: 7,
-            stamina: 8,
-            defending: 7
-        },
-
-        {
-            name: "Antonio Rüdiger",
-            position: "DEF",
-            shooting: 5,
-            passing: 7,
-            dribbling: 5,
-            pace: 8,
-            stamina: 9,
-            defending: 9
-        },
-
-        {
-            name: "David Alaba",
-            position: "DEF",
-            shooting: 5,
-            passing: 8,
-            dribbling: 6,
-            pace: 7,
-            stamina: 7,
-            defending: 8
-        },
-
-        {
-            name: "Fran García",
-            position: "DEF",
-            shooting: 4,
-            passing: 7,
-            dribbling: 7,
-            pace: 9,
-            stamina: 9,
-            defending: 7
-        },
-
-        {
-            name: "Aurélien Tchouaméni",
-            position: "MID",
-            shooting: 6,
-            passing: 8,
-            dribbling: 6,
-            pace: 7,
-            stamina: 9,
-            defending: 9
-        },
-
-        {
-            name: "Federico Valverde",
-            position: "MID",
-            shooting: 8,
-            passing: 9,
-            dribbling: 8,
-            pace: 9,
-            stamina: 10,
-            defending: 8
-        },
-
-        {
-            name: "Jude Bellingham",
-            position: "MID",
-            shooting: 9,
-            passing: 9,
-            dribbling: 9,
-            pace: 8,
-            stamina: 9,
-            defending: 8
-        },
-
-        {
-            name: "Franco Mastantuono",
-            position: "FWD",
-            shooting: 8,
-            passing: 8,
-            dribbling: 9,
-            pace: 8,
-            stamina: 7,
-            defending: 4
-        },
-
-        {
-            name: "Kylian Mbappé",
-            position: "FWD",
-            shooting: 10,
-            passing: 8,
-            dribbling: 10,
-            pace: 10,
-            stamina: 8,
-            defending: 4
-        },
-
-        {
-            name: "Vinícius Jr.",
-            position: "FWD",
-            shooting: 9,
-            passing: 8,
-            dribbling: 10,
-            pace: 10,
-            stamina: 8,
-            defending: 4
-        }
-    ],
-
-
-    // ========================================================
-    // BARCELONA
-    // ========================================================
-
-    "Barcelona": [
-
-        {
-            name: "Joan García",
-            position: "GK",
-            shooting: 2,
-            passing: 6,
-            dribbling: 3,
-            pace: 5,
-            stamina: 7,
-            defending: 8,
-            goalkeeping: 8
-        },
-
-        {
-            name: "Jules Koundé",
-            position: "DEF",
-            shooting: 5,
-            passing: 8,
-            dribbling: 6,
-            pace: 8,
-            stamina: 9,
-            defending: 9
-        },
-
-        {
-            name: "Ronald Araújo",
-            position: "DEF",
-            shooting: 5,
-            passing: 7,
-            dribbling: 5,
-            pace: 8,
-            stamina: 8,
-            defending: 10
-        },
-
-        {
-            name: "Pau Cubarsí",
-            position: "DEF",
-            shooting: 4,
-            passing: 9,
-            dribbling: 6,
-            pace: 6,
-            stamina: 8,
-            defending: 8
-        },
-
-        {
-            name: "Alejandro Balde",
-            position: "DEF",
-            shooting: 4,
-            passing: 7,
-            dribbling: 8,
-            pace: 10,
-            stamina: 8,
-            defending: 7
-        },
-
-        {
-            name: "Frenkie de Jong",
-            position: "MID",
-            shooting: 6,
-            passing: 10,
-            dribbling: 9,
-            pace: 8,
-            stamina: 9,
-            defending: 7
-        },
-
-        {
-            name: "Pedri",
-            position: "MID",
-            shooting: 7,
-            passing: 10,
-            dribbling: 9,
-            pace: 7,
-            stamina: 8,
-            defending: 6
-        },
-
-        {
-            name: "Dani Olmo",
-            position: "MID",
-            shooting: 8,
-            passing: 9,
-            dribbling: 9,
-            pace: 8,
-            stamina: 8,
-            defending: 5
-        },
-
-        {
-            name: "Lamine Yamal",
-            position: "FWD",
-            shooting: 9,
-            passing: 9,
-            dribbling: 10,
-            pace: 9,
-            stamina: 8,
-            defending: 4
-        },
-
-        {
-            name: "Karim Adeyemi",
-            position: "FWD",
-            shooting: 8,
-            passing: 7,
-            dribbling: 8,
-            pace: 10,
-            stamina: 8,
-            defending: 4
-        },
-
-        {
-            name: "Raphinha",
-            position: "FWD",
-            shooting: 9,
-            passing: 8,
-            dribbling: 9,
-            pace: 9,
-            stamina: 9,
-            defending: 5
-        }
-    ],
-
-
-    // ========================================================
-    // ALL-TIME REAL MADRID
-    // ========================================================
-
-    "All-Time Real Madrid": [
-
-        {
-            name: "Iker Casillas",
-            position: "GK",
-            shooting: 2,
-            passing: 7,
-            dribbling: 3,
-            pace: 5,
-            stamina: 8,
-            defending: 10,
-            goalkeeping: 10
-        },
-
-        {
-            name: "Roberto Carlos",
-            position: "DEF",
-            shooting: 9,
-            passing: 9,
-            dribbling: 9,
-            pace: 10,
-            stamina: 10,
-            defending: 8
-        },
-
-        {
-            name: "Sergio Ramos",
-            position: "DEF",
-            shooting: 8,
-            passing: 8,
-            dribbling: 7,
-            pace: 8,
-            stamina: 10,
-            defending: 10
-        },
-
-        {
-            name: "Fernando Hierro",
-            position: "DEF",
-            shooting: 8,
-            passing: 9,
-            dribbling: 7,
-            pace: 7,
-            stamina: 9,
-            defending: 10
-        },
-
-        {
-            name: "Marcelo",
-            position: "DEF",
-            shooting: 8,
-            passing: 9,
-            dribbling: 10,
-            pace: 8,
-            stamina: 9,
-            defending: 7
-        },
-
-        {
-            name: "Luka Modrić",
-            position: "MID",
-            shooting: 8,
-            passing: 10,
-            dribbling: 10,
-            pace: 8,
-            stamina: 10,
-            defending: 7,
-            ballonDorWins: 1
-        },
-
-        {
-            name: "Zinedine Zidane",
-            position: "MID",
-            shooting: 9,
-            passing: 10,
-            dribbling: 10,
-            pace: 8,
-            stamina: 9,
-            defending: 5,
-            ballonDorWins: 1
-        },
-
-        {
-            name: "Alfredo Di Stéfano",
-            position: "MID",
-            shooting: 10,
-            passing: 10,
-            dribbling: 9,
-            pace: 9,
-            stamina: 10,
-            defending: 7,
-            ballonDorWins: 2
-        },
-
-        {
-            name: "Cristiano Ronaldo",
-            position: "FWD",
-            shooting: 10,
-            passing: 9,
-            dribbling: 10,
-            pace: 10,
-            stamina: 10,
-            defending: 4,
-            ballonDorWins: 5
-        },
-
-        {
-            name: "Raúl",
-            position: "FWD",
-            shooting: 10,
-            passing: 9,
-            dribbling: 9,
-            pace: 9,
-            stamina: 10,
-            defending: 5
-        },
-
-        {
-            name: "Ferenc Puskás",
-            position: "FWD",
-            shooting: 10,
-            passing: 10,
-            dribbling: 9,
-            pace: 8,
-            stamina: 9,
-            defending: 4
-        }
-    ],
-
-
-    // ========================================================
-    // ALL-TIME BARCELONA
-    // ========================================================
-
-    "All-Time Barcelona": [
-
-        {
-            name: "Víctor Valdés",
-            position: "GK",
-            shooting: 2,
-            passing: 8,
-            dribbling: 4,
-            pace: 5,
-            stamina: 8,
-            defending: 9,
-            goalkeeping: 9
-        },
-
-        {
-            name: "Dani Alves",
-            position: "DEF",
-            shooting: 8,
-            passing: 10,
-            dribbling: 9,
-            pace: 9,
-            stamina: 10,
-            defending: 8
-        },
-
-        {
-            name: "Carles Puyol",
-            position: "DEF",
-            shooting: 5,
-            passing: 8,
-            dribbling: 6,
-            pace: 8,
-            stamina: 10,
-            defending: 10
-        },
-
-        {
-            name: "Gerard Piqué",
-            position: "DEF",
-            shooting: 7,
-            passing: 10,
-            dribbling: 7,
-            pace: 6,
-            stamina: 9,
-            defending: 9
-        },
-
-        {
-            name: "Jordi Alba",
-            position: "DEF",
-            shooting: 7,
-            passing: 9,
-            dribbling: 9,
-            pace: 10,
-            stamina: 9,
-            defending: 7
-        },
-
-        {
-            name: "Xavi",
-            position: "MID",
-            shooting: 7,
-            passing: 10,
-            dribbling: 9,
-            pace: 7,
-            stamina: 10,
-            defending: 6
-        },
-
-        {
-            name: "Andrés Iniesta",
-            position: "MID",
-            shooting: 8,
-            passing: 10,
-            dribbling: 10,
-            pace: 8,
-            stamina: 9,
-            defending: 6
-        },
-
-        {
-            name: "Johan Cruyff",
-            position: "MID",
-            shooting: 10,
-            passing: 10,
-            dribbling: 10,
-            pace: 10,
-            stamina: 9,
-            defending: 6,
-            ballonDorWins: 3
-        },
-
-        {
-            name: "Ronaldinho",
-            position: "FWD",
-            shooting: 9,
-            passing: 10,
-            dribbling: 10,
-            pace: 9,
-            stamina: 8,
-            defending: 3,
-            ballonDorWins: 1
-        },
-
-        {
-            name: "Lionel Messi",
-            position: "FWD",
-            shooting: 10,
-            passing: 10,
-            dribbling: 10,
-            pace: 9,
-            stamina: 9,
-            defending: 3,
-            ballonDorWins: 8
-        },
-
-        {
-            name: "Ronaldo Nazário",
-            position: "FWD",
-            shooting: 10,
-            passing: 8,
-            dribbling: 10,
-            pace: 10,
-            stamina: 8,
-            defending: 3,
-            ballonDorWins: 2
-        }
-    ],
-
-
-    // ========================================================
-    // ALL-TIME AC MILAN
-    // ========================================================
-
-    "All-Time AC Milan": [
-
-        {
-            name: "Dida",
-            position: "GK",
-            shooting: 2,
-            passing: 7,
-            dribbling: 3,
-            pace: 5,
-            stamina: 8,
-            defending: 9,
-            goalkeeping: 10
-        },
-
-        {
-            name: "Cafu",
-            position: "DEF",
-            shooting: 7,
-            passing: 9,
-            dribbling: 9,
-            pace: 10,
-            stamina: 10,
-            defending: 8
-        },
-
-        {
-            name: "Franco Baresi",
-            position: "DEF",
-            shooting: 5,
-            passing: 10,
-            dribbling: 7,
-            pace: 8,
-            stamina: 10,
-            defending: 10
-        },
-
-        {
-            name: "Alessandro Nesta",
-            position: "DEF",
-            shooting: 4,
-            passing: 9,
-            dribbling: 7,
-            pace: 8,
-            stamina: 9,
-            defending: 10
-        },
-
-        {
-            name: "Paolo Maldini",
-            position: "DEF",
-            shooting: 7,
-            passing: 9,
-            dribbling: 8,
-            pace: 9,
-            stamina: 10,
-            defending: 10
-        },
-
-        {
-            name: "Andrea Pirlo",
-            position: "MID",
-            shooting: 8,
-            passing: 10,
-            dribbling: 9,
-            pace: 6,
-            stamina: 9,
-            defending: 6
-        },
-
-        {
-            name: "Ruud Gullit",
-            position: "MID",
-            shooting: 9,
-            passing: 9,
-            dribbling: 9,
-            pace: 9,
-            stamina: 10,
-            defending: 8,
-            ballonDorWins: 1
-        },
-
-        {
-            name: "Kaká",
-            position: "MID",
-            shooting: 9,
-            passing: 9,
-            dribbling: 10,
-            pace: 10,
-            stamina: 9,
-            defending: 4,
-            ballonDorWins: 1
-        },
-
-        {
-            name: "Marco van Basten",
-            position: "FWD",
-            shooting: 10,
-            passing: 9,
-            dribbling: 9,
-            pace: 8,
-            stamina: 8,
-            defending: 3,
-            ballonDorWins: 3
-        },
-
-        {
-            name: "Andriy Shevchenko",
-            position: "FWD",
-            shooting: 10,
-            passing: 8,
-            dribbling: 9,
-            pace: 9,
-            stamina: 9,
-            defending: 3,
-            ballonDorWins: 1
-        },
-
-        {
-            name: "George Weah",
-            position: "FWD",
-            shooting: 10,
-            passing: 8,
-            dribbling: 10,
-            pace: 10,
-            stamina: 10,
-            defending: 4,
-            ballonDorWins: 1
-        }
-    ],
-
-
-    // ========================================================
-    // ALL-TIME MANCHESTER UNITED
-    // ========================================================
-
-    "All-Time Manchester United": [
-
-        {
-            name: "Peter Schmeichel",
-            position: "GK",
-            shooting: 2,
-            passing: 7,
-            dribbling: 3,
-            pace: 5,
-            stamina: 8,
-            defending: 10,
-            goalkeeping: 10
-        },
-
-        {
-            name: "Gary Neville",
-            position: "DEF",
-            shooting: 5,
-            passing: 9,
-            dribbling: 6,
-            pace: 7,
-            stamina: 10,
-            defending: 9
-        },
-
-        {
-            name: "Rio Ferdinand",
-            position: "DEF",
-            shooting: 5,
-            passing: 10,
-            dribbling: 7,
-            pace: 8,
-            stamina: 9,
-            defending: 10
-        },
-
-        {
-            name: "Nemanja Vidić",
-            position: "DEF",
-            shooting: 6,
-            passing: 7,
-            dribbling: 5,
-            pace: 7,
-            stamina: 10,
-            defending: 10
-        },
-
-        {
-            name: "Patrice Evra",
-            position: "DEF",
-            shooting: 6,
-            passing: 8,
-            dribbling: 8,
-            pace: 9,
-            stamina: 10,
-            defending: 9
-        },
-
-        {
-            name: "Paul Scholes",
-            position: "MID",
-            shooting: 9,
-            passing: 10,
-            dribbling: 8,
-            pace: 6,
-            stamina: 9,
-            defending: 7
-        },
-
-        {
-            name: "Roy Keane",
-            position: "MID",
-            shooting: 8,
-            passing: 9,
-            dribbling: 7,
-            pace: 7,
-            stamina: 10,
-            defending: 10
-        },
-
-        {
-            name: "George Best",
-            position: "MID",
-            shooting: 9,
-            passing: 9,
-            dribbling: 10,
-            pace: 10,
-            stamina: 8,
-            defending: 3,
-            ballonDorWins: 1
-        },
-
-        {
-            name: "Ryan Giggs",
-            position: "FWD",
-            shooting: 8,
-            passing: 9,
-            dribbling: 10,
-            pace: 9,
-            stamina: 10,
-            defending: 5
-        },
-
-        {
-            name: "Wayne Rooney",
-            position: "FWD",
-            shooting: 10,
-            passing: 9,
-            dribbling: 9,
-            pace: 9,
-            stamina: 10,
-            defending: 5
-        },
-
-        {
-            name: "Cristiano Ronaldo",
-            position: "FWD",
-            shooting: 10,
-            passing: 9,
-            dribbling: 10,
-            pace: 10,
-            stamina: 10,
-            defending: 4,
-            ballonDorWins: 5
-        }
-    ],
-
-
-    // ========================================================
-    // ALL-TIME MANCHESTER CITY
-    // ========================================================
-
-    "All-Time Manchester City": [
-
-        {
-            name: "Ederson",
-            position: "GK",
-            shooting: 2,
-            passing: 10,
-            dribbling: 5,
-            pace: 6,
-            stamina: 8,
-            defending: 9,
-            goalkeeping: 9
-        },
-
-        {
-            name: "Kyle Walker",
-            position: "DEF",
-            shooting: 5,
-            passing: 8,
-            dribbling: 7,
-            pace: 10,
-            stamina: 10,
-            defending: 9
-        },
-
-        {
-            name: "Vincent Kompany",
-            position: "DEF",
-            shooting: 7,
-            passing: 9,
-            dribbling: 7,
-            pace: 7,
-            stamina: 10,
-            defending: 10
-        },
-
-        {
-            name: "Rúben Dias",
-            position: "DEF",
-            shooting: 5,
-            passing: 9,
-            dribbling: 6,
-            pace: 7,
-            stamina: 10,
-            defending: 10
-        },
-
-        {
-            name: "Benjamin Mendy",
-            position: "DEF",
-            shooting: 5,
-            passing: 8,
-            dribbling: 8,
-            pace: 9,
-            stamina: 8,
-            defending: 8
-        },
-
-        {
-            name: "Kevin De Bruyne",
-            position: "MID",
-            shooting: 10,
-            passing: 10,
-            dribbling: 9,
-            pace: 8,
-            stamina: 9,
-            defending: 6
-        },
-
-        {
-            name: "David Silva",
-            position: "MID",
-            shooting: 8,
-            passing: 10,
-            dribbling: 10,
-            pace: 7,
-            stamina: 9,
-            defending: 5
-        },
-
-        {
-            name: "Rodri",
-            position: "MID",
-            shooting: 8,
-            passing: 10,
-            dribbling: 9,
-            pace: 6,
-            stamina: 10,
-            defending: 10,
-            ballonDorWins: 1
-        },
-
-        {
-            name: "Sergio Agüero",
-            position: "FWD",
-            shooting: 10,
-            passing: 8,
-            dribbling: 10,
-            pace: 9,
-            stamina: 9,
-            defending: 3
-        },
-
-        {
-            name: "Erling Haaland",
-            position: "FWD",
-            shooting: 10,
-            passing: 7,
-            dribbling: 8,
-            pace: 10,
-            stamina: 9,
-            defending: 3
-        },
-
-        {
-            name: "Raheem Sterling",
-            position: "FWD",
-            shooting: 9,
-            passing: 8,
-            dribbling: 9,
-            pace: 10,
-            stamina: 9,
-            defending: 4
-        }
-    ],
-
-
-    // ========================================================
-    // ALL-TIME BAYERN MUNICH
-    // ========================================================
-
-    "All-Time Bayern Munich": [
-
-        {
-            name: "Manuel Neuer",
-            position: "GK",
-            shooting: 2,
-            passing: 10,
-            dribbling: 5,
-            pace: 6,
-            stamina: 9,
-            defending: 10,
-            goalkeeping: 10
-        },
-
-        {
-            name: "Philipp Lahm",
-            position: "DEF",
-            shooting: 6,
-            passing: 10,
-            dribbling: 9,
-            pace: 9,
-            stamina: 10,
-            defending: 10
-        },
-
-        {
-            name: "Franz Beckenbauer",
-            position: "DEF",
-            shooting: 8,
-            passing: 10,
-            dribbling: 9,
-            pace: 8,
-            stamina: 10,
-            defending: 10,
-            ballonDorWins: 2
-        },
-
-        {
-            name: "Lothar Matthäus",
-            position: "DEF",
-            shooting: 9,
-            passing: 9,
-            dribbling: 9,
-            pace: 9,
-            stamina: 10,
-            defending: 9,
-            ballonDorWins: 1
-        },
-
-        {
-            name: "Paul Breitner",
-            position: "DEF",
-            shooting: 8,
-            passing: 9,
-            dribbling: 8,
-            pace: 8,
-            stamina: 10,
-            defending: 9
-        },
-
-        {
-            name: "Bastian Schweinsteiger",
-            position: "MID",
-            shooting: 8,
-            passing: 10,
-            dribbling: 8,
-            pace: 7,
-            stamina: 10,
-            defending: 8
-        },
-
-        {
-            name: "Thomas Müller",
-            position: "MID",
-            shooting: 9,
-            passing: 9,
-            dribbling: 8,
-            pace: 8,
-            stamina: 10,
-            defending: 5
-        },
-
-        {
-            name: "Franck Ribéry",
-            position: "MID",
-            shooting: 9,
-            passing: 9,
-            dribbling: 10,
-            pace: 9,
-            stamina: 9,
-            defending: 4
-        },
-
-        {
-            name: "Arjen Robben",
-            position: "FWD",
-            shooting: 10,
-            passing: 9,
-            dribbling: 10,
-            pace: 10,
-            stamina: 8,
-            defending: 3
-        },
-
-        {
-            name: "Gerd Müller",
-            position: "FWD",
-            shooting: 10,
-            passing: 7,
-            dribbling: 8,
-            pace: 8,
-            stamina: 9,
-            defending: 3,
-            ballonDorWins: 1
-        },
-
-        {
-            name: "Robert Lewandowski",
-            position: "FWD",
-            shooting: 10,
-            passing: 9,
-            dribbling: 9,
-            pace: 8,
-            stamina: 9,
-            defending: 4
-        }
-    ],
-
-
-    // ========================================================
-    // BALLON D'OR LEGENDS
-    // ========================================================
-
-    "Ballon d'Or Legends": [
-
-        {
-            name: "Stanley Matthews",
-            position: "FWD",
-            shooting: 8,
-            passing: 9,
-            dribbling: 10,
-            pace: 8,
-            stamina: 8,
-            defending: 3,
-            ballonDorWins: 1
-        },
-
-        {
-            name: "Alfredo Di Stéfano",
-            position: "FWD",
-            shooting: 10,
-            passing: 10,
-            dribbling: 9,
-            pace: 9,
-            stamina: 10,
-            defending: 7,
-            ballonDorWins: 2
-        },
-
-        {
-            name: "Raymond Kopa",
-            position: "MID",
-            shooting: 8,
-            passing: 9,
-            dribbling: 10,
-            pace: 9,
-            stamina: 8,
-            defending: 4,
-            ballonDorWins: 1
-        },
-
-        {
-            name: "Luis Suárez",
-            position: "MID",
-            shooting: 8,
-            passing: 10,
-            dribbling: 9,
-            pace: 8,
-            stamina: 8,
-            defending: 5,
-            ballonDorWins: 1
-        },
-
-        {
-            name: "Omar Sívori",
-            position: "FWD",
-            shooting: 9,
-            passing: 8,
-            dribbling: 10,
-            pace: 9,
-            stamina: 8,
-            defending: 3,
-            ballonDorWins: 1
-        },
-
-        {
-            name: "Josef Masopust",
-            position: "MID",
-            shooting: 8,
-            passing: 9,
-            dribbling: 9,
-            pace: 7,
-            stamina: 9,
-            defending: 6,
-            ballonDorWins: 1
-        },
-
-        {
-            name: "Lev Yashin",
-            position: "GK",
-            shooting: 2,
-            passing: 7,
-            dribbling: 3,
-            pace: 6,
-            stamina: 8,
-            defending: 10,
-            goalkeeping: 10,
-            ballonDorWins: 1
-        },
-
-        {
-            name: "Denis Law",
-            position: "FWD",
-            shooting: 10,
-            passing: 8,
-            dribbling: 9,
-            pace: 9,
-            stamina: 9,
-            defending: 3,
-            ballonDorWins: 1
-        },
-
-        {
-            name: "Eusébio",
-            position: "FWD",
-            shooting: 10,
-            passing: 8,
-            dribbling: 10,
-            pace: 10,
-            stamina: 9,
-            defending: 3,
-            ballonDorWins: 1
-        },
-
-        {
-            name: "Bobby Charlton",
-            position: "MID",
-            shooting: 10,
-            passing: 9,
-            dribbling: 8,
-            pace: 8,
-            stamina: 10,
-            defending: 6,
-            ballonDorWins: 1
-        },
-
-        {
-            name: "Flórián Albert",
-            position: "FWD",
-            shooting: 9,
-            passing: 9,
-            dribbling: 10,
-            pace: 9,
-            stamina: 8,
-            defending: 3,
-            ballonDorWins: 1
-        },
-
-        {
-            name: "George Best",
-            position: "FWD",
-            shooting: 9,
-            passing: 9,
-            dribbling: 10,
-            pace: 10,
-            stamina: 8,
-            defending: 3,
-            ballonDorWins: 1
-        },
-
-        {
-            name: "Gianni Rivera",
-            position: "MID",
-            shooting: 8,
-            passing: 10,
-            dribbling: 10,
-            pace: 7,
-            stamina: 8,
-            defending: 4,
-            ballonDorWins: 1
-        },
-
-        {
-            name: "Gerd Müller",
-            position: "FWD",
-            shooting: 10,
-            passing: 7,
-            dribbling: 8,
-            pace: 8,
-            stamina: 9,
-            defending: 3,
-            ballonDorWins: 1
-        },
-
-        {
-            name: "Johan Cruyff",
-            position: "FWD",
-            shooting: 10,
-            passing: 10,
-            dribbling: 10,
-            pace: 10,
-            stamina: 9,
-            defending: 6,
-            ballonDorWins: 3
-        },
-
-        {
-            name: "Franz Beckenbauer",
-            position: "DEF",
-            shooting: 8,
-            passing: 10,
-            dribbling: 9,
-            pace: 8,
-            stamina: 10,
-            defending: 10,
-            ballonDorWins: 2
-        },
-
-        {
-            name: "Oleh Blokhin",
-            position: "FWD",
-            shooting: 9,
-            passing: 8,
-            dribbling: 9,
-            pace: 10,
-            stamina: 10,
-            defending: 3,
-            ballonDorWins: 1
-        },
-
-        {
-            name: "Allan Simonsen",
-            position: "FWD",
-            shooting: 9,
-            passing: 9,
-            dribbling: 10,
-            pace: 9,
-            stamina: 9,
-            defending: 3,
-            ballonDorWins: 1
-        },
-
-        {
-            name: "Kevin Keegan",
-            position: "FWD",
-            shooting: 9,
-            passing: 8,
-            dribbling: 9,
-            pace: 9,
-            stamina: 10,
-            defending: 4,
-            ballonDorWins: 2
-        },
-
-        {
-            name: "Karl-Heinz Rummenigge",
-            position: "FWD",
-            shooting: 10,
-            passing: 8,
-            dribbling: 9,
-            pace: 9,
-            stamina: 9,
-            defending: 3,
-            ballonDorWins: 2
-        },
-
-        {
-            name: "Paolo Rossi",
-            position: "FWD",
-            shooting: 10,
-            passing: 8,
-            dribbling: 8,
-            pace: 9,
-            stamina: 9,
-            defending: 3,
-            ballonDorWins: 1
-        },
-
-        {
-            name: "Michel Platini",
-            position: "MID",
-            shooting: 10,
-            passing: 10,
-            dribbling: 9,
-            pace: 8,
-            stamina: 9,
-            defending: 5,
-            ballonDorWins: 3
-        },
-
-        {
-            name: "Ihor Belanov",
-            position: "FWD",
-            shooting: 9,
-            passing: 7,
-            dribbling: 9,
-            pace: 10,
-            stamina: 9,
-            defending: 3,
-            ballonDorWins: 1
-        },
-
-        {
-            name: "Ruud Gullit",
-            position: "MID",
-            shooting: 9,
-            passing: 9,
-            dribbling: 9,
-            pace: 9,
-            stamina: 10,
-            defending: 8,
-            ballonDorWins: 1
-        },
-
-        {
-            name: "Marco van Basten",
-            position: "FWD",
-            shooting: 10,
-            passing: 9,
-            dribbling: 9,
-            pace: 8,
-            stamina: 8,
-            defending: 3,
-            ballonDorWins: 3
-        },
-
-        {
-            name: "Lothar Matthäus",
-            position: "MID",
-            shooting: 9,
-            passing: 9,
-            dribbling: 9,
-            pace: 9,
-            stamina: 10,
-            defending: 9,
-            ballonDorWins: 1
-        },
-
-        {
-            name: "Jean-Pierre Papin",
-            position: "FWD",
-            shooting: 10,
-            passing: 7,
-            dribbling: 8,
-            pace: 9,
-            stamina: 8,
-            defending: 3,
-            ballonDorWins: 1
-        },
-
-        {
-            name: "Roberto Baggio",
-            position: "FWD",
-            shooting: 10,
-            passing: 10,
-            dribbling: 10,
-            pace: 8,
-            stamina: 8,
-            defending: 3,
-            ballonDorWins: 1
-        },
-
-        {
-            name: "Hristo Stoichkov",
-            position: "FWD",
-            shooting: 10,
-            passing: 8,
-            dribbling: 9,
-            pace: 9,
-            stamina: 9,
-            defending: 4,
-            ballonDorWins: 1
-        },
-
-        {
-            name: "George Weah",
-            position: "FWD",
-            shooting: 10,
-            passing: 8,
-            dribbling: 10,
-            pace: 10,
-            stamina: 10,
-            defending: 4,
-            ballonDorWins: 1
-        },
-
-        {
-            name: "Matthias Sammer",
-            position: "DEF",
-            shooting: 8,
-            passing: 9,
-            dribbling: 8,
-            pace: 8,
-            stamina: 10,
-            defending: 10,
-            ballonDorWins: 1
-        },
-
-        {
-            name: "Ronaldo Nazário",
-            position: "FWD",
-            shooting: 10,
-            passing: 8,
-            dribbling: 10,
-            pace: 10,
-            stamina: 8,
-            defending: 3,
-            ballonDorWins: 2
-        },
-
-        {
-            name: "Zinédine Zidane",
-            position: "MID",
-            shooting: 9,
-            passing: 10,
-            dribbling: 10,
-            pace: 8,
-            stamina: 9,
-            defending: 5,
-            ballonDorWins: 1
-        },
-
-        {
-            name: "Rivaldo",
-            position: "FWD",
-            shooting: 10,
-            passing: 9,
-            dribbling: 9,
-            pace: 8,
-            stamina: 9,
-            defending: 4,
-            ballonDorWins: 1
-        },
-
-        {
-            name: "Luís Figo",
-            position: "MID",
-            shooting: 8,
-            passing: 10,
-            dribbling: 10,
-            pace: 9,
-            stamina: 9,
-            defending: 5,
-            ballonDorWins: 1
-        },
-
-        {
-            name: "Michael Owen",
-            position: "FWD",
-            shooting: 9,
-            passing: 7,
-            dribbling: 8,
-            pace: 10,
-            stamina: 8,
-            defending: 3,
-            ballonDorWins: 1
-        },
-
-        {
-            name: "Pavel Nedvěd",
-            position: "MID",
-            shooting: 9,
-            passing: 9,
-            dribbling: 9,
-            pace: 9,
-            stamina: 10,
-            defending: 6,
-            ballonDorWins: 1
-        },
-
-        {
-            name: "Andriy Shevchenko",
-            position: "FWD",
-            shooting: 10,
-            passing: 8,
-            dribbling: 9,
-            pace: 9,
-            stamina: 9,
-            defending: 3,
-            ballonDorWins: 1
-        },
-
-        {
-            name: "Ronaldinho",
-            position: "FWD",
-            shooting: 9,
-            passing: 10,
-            dribbling: 10,
-            pace: 9,
-            stamina: 8,
-            defending: 3,
-            ballonDorWins: 1
-        },
-
-        {
-            name: "Fabio Cannavaro",
-            position: "DEF",
-            shooting: 5,
-            passing: 8,
-            dribbling: 6,
-            pace: 9,
-            stamina: 10,
-            defending: 10,
-            ballonDorWins: 1
-        },
-
-        {
-            name: "Kaká",
-            position: "MID",
-            shooting: 9,
-            passing: 9,
-            dribbling: 10,
-            pace: 10,
-            stamina: 9,
-            defending: 4,
-            ballonDorWins: 1
-        },
-
-        {
-            name: "Cristiano Ronaldo",
-            position: "FWD",
-            shooting: 10,
-            passing: 9,
-            dribbling: 10,
-            pace: 10,
-            stamina: 10,
-            defending: 4,
-            ballonDorWins: 5
-        },
-
-        {
-            name: "Lionel Messi",
-            position: "FWD",
-            shooting: 10,
-            passing: 10,
-            dribbling: 10,
-            pace: 9,
-            stamina: 9,
-            defending: 3,
-            ballonDorWins: 8
-        },
-
-        {
-            name: "Luka Modrić",
-            position: "MID",
-            shooting: 8,
-            passing: 10,
-            dribbling: 10,
-            pace: 8,
-            stamina: 10,
-            defending: 7,
-            ballonDorWins: 1
-        },
-
-        {
-            name: "Karim Benzema",
-            position: "FWD",
-            shooting: 10,
-            passing: 9,
-            dribbling: 9,
-            pace: 8,
-            stamina: 9,
-            defending: 4,
-            ballonDorWins: 1
-        },
-
-        {
-            name: "Rodri",
-            position: "MID",
-            shooting: 8,
-            passing: 10,
-            dribbling: 9,
-            pace: 6,
-            stamina: 10,
-            defending: 10,
-            ballonDorWins: 1
-        },
-
-        {
-            name: "Ousmane Dembélé",
-            position: "FWD",
-            shooting: 9,
-            passing: 9,
-            dribbling: 10,
-            pace: 10,
-            stamina: 9,
-            defending: 5,
-            ballonDorWins: 1
-        }
-    ]
-};
-
-
-// ============================================================
-// BALLON D'OR HISTORY
-// ============================================================
-
-const ballonDorHistory = {
-
-    1956: "Stanley Matthews",
-    1957: "Alfredo Di Stéfano",
-    1958: "Raymond Kopa",
-    1959: "Alfredo Di Stéfano",
-    1960: "Luis Suárez",
-    1961: "Omar Sívori",
-    1962: "Josef Masopust",
-    1963: "Lev Yashin",
-    1964: "Denis Law",
-    1965: "Eusébio",
-    1966: "Bobby Charlton",
-    1967: "Flórián Albert",
-    1968: "George Best",
-    1969: "Gianni Rivera",
-    1970: "Gerd Müller",
-    1971: "Johan Cruyff",
-    1972: "Franz Beckenbauer",
-    1973: "Johan Cruyff",
-    1974: "Johan Cruyff",
-    1975: "Oleh Blokhin",
-    1976: "Franz Beckenbauer",
-    1977: "Allan Simonsen",
-    1978: "Kevin Keegan",
-    1979: "Kevin Keegan",
-    1980: "Karl-Heinz Rummenigge",
-    1981: "Karl-Heinz Rummenigge",
-    1982: "Paolo Rossi",
-    1983: "Michel Platini",
-    1984: "Michel Platini",
-    1985: "Michel Platini",
-    1986: "Ihor Belanov",
-    1987: "Ruud Gullit",
-    1988: "Marco van Basten",
-    1989: "Marco van Basten",
-    1990: "Lothar Matthäus",
-    1991: "Jean-Pierre Papin",
-    1992: "Marco van Basten",
-    1993: "Roberto Baggio",
-    1994: "Hristo Stoichkov",
-    1995: "George Weah",
-    1996: "Matthias Sammer",
-    1997: "Ronaldo Nazário",
-    1998: "Zinédine Zidane",
-    1999: "Rivaldo",
-    2000: "Luís Figo",
-    2001: "Michael Owen",
-    2002: "Ronaldo Nazário",
-    2003: "Pavel Nedvěd",
-    2004: "Andriy Shevchenko",
-    2005: "Ronaldinho",
-    2006: "Fabio Cannavaro",
-    2007: "Kaká",
-    2008: "Cristiano Ronaldo",
-    2009: "Lionel Messi",
-    2010: "Lionel Messi",
-    2011: "Lionel Messi",
-    2012: "Lionel Messi",
-    2013: "Cristiano Ronaldo",
-    2014: "Cristiano Ronaldo",
-    2015: "Lionel Messi",
-    2016: "Cristiano Ronaldo",
-    2017: "Cristiano Ronaldo",
-    2018: "Luka Modrić",
-    2019: "Lionel Messi",
-
-    // 2020 was not awarded
-
-    2021: "Lionel Messi",
-    2022: "Karim Benzema",
-    2023: "Lionel Messi",
-    2024: "Rodri",
-    2025: "Ousmane Dembélé"
-};
-
-
-// ============================================================
-// GAME STATE
-// ============================================================
-
-let selectedTeam = null;
-let selectedFormation = null;
-let selectedPlayers = [];
-
-let currentFilter = "ALL";
-
-
-// ============================================================
-// PLAYER OVR CALCULATOR
-// ============================================================
-
-function calculatePlayerOVR(player) {
-
-    if (player.position === "FWD") {
-
-        return (
-            0.30 * player.shooting +
-            0.20 * player.dribbling +
-            0.20 * player.pace +
-            0.15 * player.passing +
-            0.10 * player.stamina +
-            0.05 * player.defending
-        );
-    }
-
-
-    if (player.position === "MID") {
-
-        return (
-            0.25 * player.passing +
-            0.20 * player.dribbling +
-            0.20 * player.stamina +
-            0.15 * player.shooting +
-            0.10 * player.pace +
-            0.10 * player.defending
-        );
-    }
-
-
-    if (player.position === "DEF") {
-
-        return (
-            0.35 * player.defending +
-            0.20 * player.stamina +
-            0.15 * player.pace +
-            0.15 * player.passing +
-            0.10 * player.dribbling +
-            0.05 * player.shooting
-        );
-    }
-
-
-    if (player.position === "GK") {
-
-        return (
-            0.50 * player.goalkeeping +
-            0.15 * player.defending +
-            0.15 * player.passing +
-            0.10 * player.stamina +
-            0.05 * player.pace +
-            0.05 * player.dribbling
-        );
-    }
-
-    return 0;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #07111f;
+    color: white;
+    min-height: 100vh;
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.screen {
+    display: none;
+    min-height: 100vh;
+}
+
+.screen.active {
+    display: block;
 }
 
 
-// ============================================================
-// SCREEN CONTROL
-// ============================================================
+/* HOME */
 
-function showScreen(screenID) {
+.hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 
-    document.querySelectorAll(".screen").forEach(function(screen) {
-        screen.classList.remove("active");
-    });
+    padding: 30px;
 
-    const screen = document.getElementById(screenID);
+    background:
+        radial-gradient(circle at center, #17365d 0%, #07111f 55%);
+}
 
-    if (screen) {
-        screen.classList.add("active");
-    }
+.ball {
+    font-size: 70px;
+    margin-bottom: 20px;
+}
+
+.hero h1 {
+    font-size: clamp(45px, 8vw, 90px);
+    letter-spacing: 4px;
+}
+
+.hero h1 span {
+    color: #39e6a5;
+}
+
+.hero p {
+    margin-top: 15px;
+    color: #9eacc0;
+    font-size: 18px;
+}
+
+.primary-btn {
+    margin-top: 35px;
+    padding: 16px 35px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: #39e6a5;
+    color: #06121d;
+
+    font-weight: bold;
+    font-size: 16px;
+
+    transition: 0.2s;
+}
+
+.primary-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(57, 230, 165, 0.25);
+}
+
+.version {
+    font-size: 12px !important;
+    margin-top: 60px !important;
+    color: #64748b !important;
 }
 
 
-// ============================================================
-// START MATCH
-// ============================================================
+/* HEADER */
 
-function startMatch() {
+header {
+    height: 80px;
 
-    selectedTeam = null;
-    selectedFormation = null;
-    selectedPlayers = [];
-    currentFilter = "ALL";
+    display: flex;
+    align-items: center;
 
-    showScreen("teamScreen");
+    padding: 0 30px;
 
-    const formationSection =
-        document.getElementById("formationSection");
+    border-bottom: 1px solid #1c2a3b;
 
-    const playerSection =
-        document.getElementById("playerSection");
+    background: #091625;
+}
 
-    const continueButton =
-        document.getElementById("continueButton");
+header h2 {
+    margin-left: 20px;
+    font-size: 18px;
+}
 
-    const stepNumber =
-        document.getElementById("stepNumber");
+.back-btn {
+    width: 40px;
+    height: 40px;
 
-    if (formationSection) {
-        formationSection.classList.add("hidden");
-    }
+    border-radius: 8px;
+    border: 1px solid #26384d;
 
-    if (playerSection) {
-        playerSection.classList.add("hidden");
-    }
+    background: #101e2e;
+    color: white;
 
-    if (continueButton) {
-        continueButton.classList.add("hidden");
-    }
+    font-size: 20px;
+}
 
-    if (stepNumber) {
-        stepNumber.textContent = "1";
-    }
+.step {
+    margin-left: auto;
+    color: #718096;
+    font-size: 13px;
+}
+
+.step span {
+    color: #39e6a5;
 }
 
 
-// ============================================================
-// TEAM SELECTION
-// ============================================================
+/* BUILDER */
 
-function chooseTeam(team) {
+.builder {
+    max-width: 1100px;
+    margin: auto;
+    padding: 40px 25px;
+}
 
-    if (!players[team]) {
-        console.error("Team not found:", team);
-        return;
-    }
+.builder-section {
+    margin-bottom: 40px;
+}
 
-    selectedTeam = team;
-    selectedFormation = null;
-    selectedPlayers = [];
-    currentFilter = "ALL";
-
-    document.getElementById("formationSection")
-        .classList.remove("hidden");
-
-    document.getElementById("playerSection")
-        .classList.add("hidden");
-
-    document.getElementById("continueButton")
-        .classList.add("hidden");
-
-    document.getElementById("stepNumber")
-        .textContent = "2";
-
-    const formationSection =
-        document.getElementById("formationSection");
-
-    if (formationSection) {
-
-        window.scrollTo({
-            top: formationSection.offsetTop - 30,
-            behavior: "smooth"
-        });
-    }
+.builder-section h3 {
+    margin-bottom: 20px;
+    font-size: 20px;
 }
 
 
-// ============================================================
-// FORMATION SELECTION
-// ============================================================
+/* TEAM CHOICE */
 
-function chooseFormation(formation) {
+.team-choice {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
 
-    selectedFormation = formation;
-    selectedPlayers = [];
-    currentFilter = "ALL";
+.team-card {
+    padding: 30px;
 
-    document.getElementById("playerSection")
-        .classList.remove("hidden");
+    border: 1px solid #26384d;
+    border-radius: 15px;
 
-    document.getElementById("continueButton")
-        .classList.add("hidden");
+    background: #0d1b2c;
+    color: white;
 
-    document.getElementById("stepNumber")
-        .textContent = "3";
+    transition: 0.2s;
+}
 
-    loadPlayers();
+.team-card:hover {
+    border-color: #39e6a5;
+    transform: translateY(-3px);
+}
 
-    updatePitch();
+.team-logo {
+    font-size: 45px;
+    margin-bottom: 15px;
+}
 
-    updateTeamOVR();
+.team-card h3 {
+    margin-bottom: 5px;
+}
 
-    document.getElementById("selectionText")
-        .textContent = "0 / 11 players selected";
-
-    const playerSection =
-        document.getElementById("playerSection");
-
-    if (playerSection) {
-
-        window.scrollTo({
-            top: playerSection.offsetTop - 30,
-            behavior: "smooth"
-        });
-    }
+.team-card p {
+    color: #718096;
 }
 
 
-// ============================================================
-// PLAYER LIST
-// ============================================================
+/* FORMATIONS */
 
-function loadPlayers() {
+.formation-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
 
-    const list =
-        document.getElementById("playerList");
+.formation-grid button {
+    padding: 20px;
 
-    if (!list) {
-        return;
-    }
+    border-radius: 10px;
+    border: 1px solid #26384d;
 
-    list.innerHTML = "";
+    background: #0d1b2c;
+    color: white;
+}
 
-    if (!selectedTeam || !players[selectedTeam]) {
-        return;
-    }
+.formation-grid button:hover {
+    border-color: #39e6a5;
+}
 
-    let teamPlayers = players[selectedTeam];
+.formation-grid strong {
+    display: block;
+    font-size: 22px;
+    color: #39e6a5;
+}
 
-    if (currentFilter !== "ALL") {
-
-        teamPlayers =
-            teamPlayers.filter(function(player) {
-
-                return player.position === currentFilter;
-
-            });
-    }
-
-
-    teamPlayers.forEach(function(player) {
-
-        const card =
-            document.createElement("button");
-
-        card.type = "button";
-        card.className = "player-card";
-
-
-        // If already selected
-        if (selectedPlayers.includes(player)) {
-
-            card.classList.add("selected");
-            card.disabled = true;
-        }
-
-
-        const score =
-            calculatePlayerOVR(player);
-
-
-        const ballonDorText =
-            player.ballonDorWins
-                ? ` • Ballon d'Or: ${player.ballonDorWins}`
-                : "";
-
-
-        card.innerHTML = `
-
-            <div>
-
-                <div class="player-position">
-                    ${player.position}
-                </div>
-
-            </div>
-
-            <div class="player-info">
-
-                <div class="player-name">
-                    ${player.name}
-                </div>
-
-                <small>
-                    ${getPositionName(player.position)}
-                    ${ballonDorText}
-                </small>
-
-            </div>
-
-            <div class="player-score">
-                ${score.toFixed(1)}
-            </div>
-
-        `;
-
-
-        card.onclick = function() {
-
-            selectPlayer(player, card);
-
-        };
-
-
-        list.appendChild(card);
-
-    });
+.formation-grid small {
+    display: block;
+    margin-top: 8px;
+    color: #718096;
 }
 
 
-// ============================================================
-// FILTER PLAYERS
-// ============================================================
+/* PLAYER SELECTION */
 
-function filterPlayers(positionFilter) {
+.selection-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-    currentFilter = positionFilter;
+.selection-header p {
+    color: #718096;
+    margin-top: 5px;
+}
 
-    loadPlayers();
+.team-ovr {
+    text-align: right;
+}
 
+.team-ovr span {
+    display: block;
+    color: #718096;
+    font-size: 11px;
+}
+
+.team-ovr strong {
+    font-size: 30px;
+    color: #39e6a5;
 }
 
 
-// ============================================================
-// POSITION NAME
-// ============================================================
+/* PITCH */
 
-function getPositionName(position) {
+.pitch {
+    margin: 30px auto;
+    padding: 35px 20px;
 
-    if (position === "GK") {
-        return "Goalkeeper";
-    }
+    max-width: 750px;
 
-    if (position === "DEF") {
-        return "Defender";
-    }
+    min-height: 500px;
 
-    if (position === "MID") {
-        return "Midfielder";
-    }
+    border: 3px solid rgba(255,255,255,0.4);
+    border-radius: 20px;
 
-    if (position === "FWD") {
-        return "Forward";
-    }
-
-    return "Player";
-}
-
-
-// ============================================================
-// SELECT PLAYER
-// ============================================================
-
-function selectPlayer(player, card) {
-
-    if (selectedPlayers.length >= 11) {
-        return;
-    }
-
-
-    if (selectedPlayers.includes(player)) {
-        return;
-    }
-
-
-    selectedPlayers.push(player);
-
-
-    if (card) {
-
-        card.classList.add("selected");
-        card.disabled = true;
-
-    }
-
-
-    updatePitch();
-
-    updateTeamOVR();
-
-
-    const selectionText =
-        document.getElementById("selectionText");
-
-
-    if (selectionText) {
-
-        selectionText.textContent =
-            `${selectedPlayers.length} / 11 players selected`;
-
-    }
-
-
-    // Reload the list so selected players remain
-    // selected even when using filters.
-
-    loadPlayers();
-
-
-    if (selectedPlayers.length === 11) {
-
-        const continueButton =
-            document.getElementById("continueButton");
-
-
-        if (continueButton) {
-
-            continueButton.classList.remove("hidden");
-
-            continueButton.scrollIntoView({
-                behavior: "smooth"
-            });
-
-        }
-    }
-}
-
-
-// ============================================================
-// PITCH
-// ============================================================
-
-function updatePitch() {
-
-    for (let i = 0; i < 11; i++) {
-
-        const position =
-            document.getElementById(`position-${i}`);
-
-
-        if (!position) {
-            continue;
-        }
-
-
-        position.classList.remove("filled");
-
-
-        let positionText;
-
-
-        if (i === 0) {
-
-            positionText = "GK";
-
-        } else if (i <= 4) {
-
-            positionText = "DEF";
-
-        } else if (i <= 7) {
-
-            positionText = "MID";
-
-        } else {
-
-            positionText = "FWD";
-
-        }
-
-
-        position.innerHTML = `
-            <span>${positionText}</span>
-        `;
-    }
-
-
-    selectedPlayers.forEach(function(player, index) {
-
-        const position =
-            document.getElementById(`position-${index}`);
-
-
-        if (!position) {
-            return;
-        }
-
-
-        position.classList.add("filled");
-
-
-        position.innerHTML = `
-
-            <span class="position-name">
-                ${player.position}
-            </span>
-
-            <span class="player-name">
-                ${shortName(player.name)}
-            </span>
-
-        `;
-
-    });
-}
-
-
-// ============================================================
-// SHORT PLAYER NAME
-// ============================================================
-
-function shortName(name) {
-
-    const parts =
-        name.split(" ");
-
-    return parts[parts.length - 1];
-}
-
-
-// ============================================================
-// TEAM OVR
-// ============================================================
-
-function updateTeamOVR() {
-
-    const teamOVRElement =
-        document.getElementById("teamOVR");
-
-
-    if (!teamOVRElement) {
-        return;
-    }
-
-
-    if (selectedPlayers.length === 0) {
-
-        teamOVRElement.textContent = "--";
-
-        return;
-    }
-
-
-    const total =
-        selectedPlayers.reduce(
-            function(sum, player) {
-
-                return sum +
-                    calculatePlayerOVR(player);
-
-            },
-            0
+    background:
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,0.03) 50%,
+            transparent 50%
         );
 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
 
-    const average =
-        total / selectedPlayers.length;
+.position-row {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+}
 
+.pitch-position {
+    width: 80px;
+    height: 65px;
 
-    teamOVRElement.textContent =
-        average.toFixed(2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 50%;
+
+    background: #12263b;
+    border: 2px dashed #506176;
+
+    color: #8796a9;
+
+    font-size: 11px;
+}
+
+.pitch-position.filled {
+    border-style: solid;
+    border-color: #39e6a5;
+    color: white;
+    background: #153d39;
+    flex-direction: column;
+}
+
+.pitch-position .position-name {
+    font-size: 9px;
+    color: #39e6a5;
+}
+
+.pitch-position .player-name {
+    font-size: 10px;
+    font-weight: bold;
+    margin-top: 3px;
 }
 
 
-// ============================================================
-// FINISH TEAM
-// ============================================================
+/* PLAYERS */
 
-function finishTeam() {
+.players-title {
+    margin-top: 30px;
+}
 
-    if (selectedPlayers.length !== 11) {
+.player-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
 
-        alert("You need to select exactly 11 players.");
+.player-card {
+    padding: 15px;
 
-        return;
+    border: 1px solid #26384d;
+    border-radius: 10px;
+
+    background: #0d1b2c;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    text-align: left;
+}
+
+.player-card:hover {
+    border-color: #39e6a5;
+}
+
+.player-card.selected {
+    opacity: 0.35;
+    pointer-events: none;
+}
+
+.player-position {
+    font-size: 10px;
+    color: #39e6a5;
+}
+
+.player-info {
+    flex: 1;
+}
+
+.player-name {
+    font-weight: bold;
+}
+
+.player-score {
+    font-size: 18px;
+    font-weight: bold;
+    color: #39e6a5;
+}
+
+
+/* READY */
+
+.ready-container {
+    max-width: 700px;
+    margin: auto;
+    padding: 70px 25px;
+
+    text-align: center;
+}
+
+.success-icon {
+    width: 80px;
+    height: 80px;
+
+    margin: auto;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #39e6a5;
+    color: #06121d;
+
+    font-size: 45px;
+    font-weight: bold;
+}
+
+.ready-container h1 {
+    margin-top: 25px;
+    font-size: 45px;
+}
+
+.ready-container > p {
+    color: #718096;
+    margin-top: 10px;
+}
+
+.summary-card {
+    margin-top: 35px;
+
+    padding: 30px;
+
+    border-radius: 15px;
+
+    background: #0d1b2c;
+    border: 1px solid #26384d;
+}
+
+.summary-card h2 {
+    font-size: 28px;
+}
+
+.summary-formation {
+    margin-top: 10px;
+    color: #718096;
+}
+
+.summary-formation strong {
+    color: white;
+}
+
+.big-ovr {
+    margin: 30px 0;
+}
+
+.big-ovr span {
+    display: block;
+    color: #718096;
+    font-size: 12px;
+}
+
+.big-ovr strong {
+    font-size: 60px;
+    color: #39e6a5;
+}
+
+.summary-players {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+.summary-player {
+    padding: 10px;
+
+    border-radius: 7px;
+    background: #101f31;
+
+    font-size: 12px;
+}
+
+.summary-player span {
+    display: block;
+    color: #718096;
+    font-size: 10px;
+}
+
+.secondary-btn {
+    margin-top: 25px;
+
+    padding: 14px 25px;
+
+    border-radius: 8px;
+    border: 1px solid #26384d;
+
+    background: transparent;
+    color: white;
+}
+
+.secondary-btn:hover {
+    border-color: #39e6a5;
+}
+
+.coming-soon {
+    margin-top: 40px !important;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+
+/* UTILITY */
+
+.hidden {
+    display: none !important;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+
+    .team-choice,
+    .formation-grid {
+        grid-template-columns: 1fr 1fr;
     }
 
+    .player-list {
+        grid-template-columns: 1fr;
+    }
 
-    const total =
-        selectedPlayers.reduce(
-            function(sum, player) {
+    .pitch {
+        min-height: 450px;
+    }
 
-                return sum +
-                    calculatePlayerOVR(player);
+    .pitch-position {
+        width: 60px;
+        height: 55px;
+    }
 
-            },
-            0
+    .position-row {
+        gap: 8px;
+    }
+
+    .summary-players {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+/* ============================================================
+   TEAM COMPARISON
+   ============================================================ */
+
+#comparisonScreen {
+    min-height: 100vh;
+    background: #07111f;
+}
+
+.comparison-container {
+    max-width: 1000px;
+    margin: auto;
+    padding: 50px 25px;
+}
+
+/* ============================================================
+   COMPARISON HEADER
+   ============================================================ */
+
+.comparison-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.comparison-header h1 {
+    font-size: 42px;
+    margin-bottom: 8px;
+}
+
+.comparison-header p {
+    color: #718096;
+    font-size: 14px;
+}
+
+/* ============================================================
+   TEAMS
+   ============================================================ */
+
+.comparison-teams {
+    display: grid;
+    grid-template-columns: 1fr 100px 1fr;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.compare-team {
+    padding: 30px 20px;
+    text-align: center;
+
+    background: #0d1b2c;
+    border: 1px solid #26384d;
+    border-radius: 15px;
+
+    transition: 0.2s;
+}
+
+.compare-team:hover {
+    border-color: #39e6a5;
+}
+
+.compare-team h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.compare-ovr {
+    font-size: 55px;
+    font-weight: bold;
+    color: #39e6a5;
+}
+
+.comparison-vs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 70px;
+    height: 70px;
+
+    margin: auto;
+
+    border-radius: 50%;
+    border: 2px solid #26384d;
+
+    background: #101f31;
+
+    font-size: 20px;
+    font-weight: bold;
+    color: #718096;
+}
+
+/* ============================================================
+   STATS
+   ============================================================ */
+
+.comparison-stats {
+    padding: 30px;
+
+    background: #0d1b2c;
+    border: 1px solid #26384d;
+    border-radius: 15px;
+}
+
+.comparison-stat {
+    margin-bottom: 25px;
+}
+
+.comparison-stat:last-child {
+    margin-bottom: 0;
+}
+
+.stat-title {
+    display: grid;
+    grid-template-columns: 1fr 100px 1fr;
+    align-items: center;
+
+    margin-bottom: 8px;
+}
+
+.stat-value-left {
+    text-align: right;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.stat-value-right {
+    text-align: left;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.stat-name {
+    text-align: center;
+
+    color: #718096;
+
+    font-size: 11px;
+    font-weight: bold;
+
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* ============================================================
+   STAT BAR
+   ============================================================ */
+
+.stat-bar {
+    height: 12px;
+
+    display: flex;
+
+    background: #101f31;
+
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.stat-bar-fill {
+    height: 100%;
+
+    width: 50%;
+
+    background: #39e6a5;
+
+    border-radius: 10px 0 0 10px;
+
+    transition: width 0.6s ease;
+}
+
+/* ============================================================
+   PREDICTION
+   ============================================================ */
+
+.prediction-card {
+    margin-top: 35px;
+    padding: 35px 25px;
+
+    text-align: center;
+
+    background: #0d1b2c;
+    border: 1px solid #26384d;
+    border-radius: 15px;
+}
+
+.prediction-card h3 {
+    color: #718096;
+
+    font-size: 12px;
+    font-weight: bold;
+
+    text-transform: uppercase;
+    letter-spacing: 2px;
+
+    margin-bottom: 15px;
+}
+
+#winnerText {
+    font-size: 38px;
+    font-weight: bold;
+
+    color: #39e6a5;
+
+    margin-bottom: 12px;
+}
+
+#winnerReason {
+    max-width: 650px;
+    margin: auto;
+
+    color: #718096;
+
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* ============================================================
+   COMPARISON BUTTONS
+   ============================================================ */
+
+.comparison-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+
+    margin-top: 30px;
+}
+
+.comparison-buttons button {
+    padding: 14px 25px;
+
+    border-radius: 8px;
+    border: 1px solid #26384d;
+
+    background: #101f31;
+    color: white;
+
+    font-weight: bold;
+
+    transition: 0.2s;
+}
+
+.comparison-buttons button:hover {
+    border-color: #39e6a5;
+    transform: translateY(-2px);
+}
+
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+
+@media (max-width: 700px) {
+
+    .comparison-container {
+        padding: 30px 15px;
+    }
+
+    .comparison-header h1 {
+        font-size: 32px;
+    }
+
+    .comparison-teams {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .comparison-vs {
+        width: 50px;
+        height: 50px;
+
+        font-size: 15px;
+    }
+
+    .compare-team {
+        padding: 22px 15px;
+    }
+
+    .compare-team h2 {
+        font-size: 20px;
+    }
+
+    .compare-ovr {
+        font-size: 42px;
+    }
+
+    .comparison-stats {
+        padding: 20px 15px;
+    }
+
+    .stat-title {
+        grid-template-columns: 60px 1fr 60px;
+    }
+
+    .stat-name {
+        font-size: 9px;
+    }
+
+    .stat-value-left,
+    .stat-value-right {
+        font-size: 13px;
+    }
+
+    .prediction-card {
+        padding: 28px 18px;
+    }
+
+    #winnerText {
+        font-size: 28px;
+    }
+
+}
+/* ============================================================
+   FIFA-STYLE MATCH COMPARISON SCREEN
+   ============================================================ */
+
+#comparisonScreen {
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at 50% 0%, #193b5d 0%, #07111f 45%, #040a12 100%);
+    color: white;
+    overflow-x: hidden;
+}
+
+/* ============================================================
+   TOP MATCH HEADER
+   ============================================================ */
+
+#comparisonScreen header {
+    background: rgba(4, 10, 18, 0.85);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(10px);
+}
+
+#comparisonScreen header h2 {
+    letter-spacing: 1px;
+}
+
+/* ============================================================
+   MAIN CONTAINER
+   ============================================================ */
+
+.comparison-container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 35px 25px 60px;
+}
+
+/* ============================================================
+   MATCH TITLE
+   ============================================================ */
+
+.comparison-header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.comparison-header h1 {
+    font-size: 14px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #9eacc0;
+    margin-bottom: 5px;
+}
+
+.comparison-header p {
+    color: #506176;
+    font-size: 11px;
+}
+
+/* ============================================================
+   SCOREBOARD
+   ============================================================ */
+
+.comparison-teams {
+    position: relative;
+
+    display: grid;
+    grid-template-columns: 1fr 150px 1fr;
+    align-items: center;
+
+    min-height: 260px;
+
+    padding: 35px 25px;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(20,45,68,0.95),
+            rgba(7,17,31,0.98)
         );
 
+    border: 1px solid rgba(255,255,255,0.08);
 
-    const teamOVR =
-        total / selectedPlayers.length;
+    box-shadow:
+        0 20px 50px rgba(0,0,0,0.35);
 
+    overflow: hidden;
+}
 
-    const summaryTeam =
-        document.getElementById("summaryTeam");
+/* Stadium light effect */
 
-    const summaryFormation =
-        document.getElementById("summaryFormation");
+.comparison-teams::before {
+    content: "";
 
-    const summaryOVR =
-        document.getElementById("summaryOVR");
+    position: absolute;
 
+    width: 500px;
+    height: 500px;
 
-    if (summaryTeam) {
+    left: 50%;
+    top: -300px;
 
-        summaryTeam.textContent =
-            selectedTeam;
+    transform: translateX(-50%);
 
-    }
+    background: radial-gradient(
+        circle,
+        rgba(57,230,165,0.12),
+        transparent 65%
+    );
 
+    pointer-events: none;
+}
 
-    if (summaryFormation) {
+/* ============================================================
+   TEAM CARDS
+   ============================================================ */
 
-        summaryFormation.textContent =
-            selectedFormation;
+.compare-team {
+    position: relative;
+    z-index: 2;
 
-    }
+    text-align: center;
 
+    padding: 20px;
+    background: transparent;
+    border: none;
+}
 
-    if (summaryOVR) {
+.compare-team:hover {
+    border: none;
+    transform: none;
+}
 
-        summaryOVR.textContent =
-            teamOVR.toFixed(2);
+.compare-team h2 {
+    font-size: 25px;
+    font-weight: 800;
 
-    }
+    margin-bottom: 15px;
 
+    text-transform: uppercase;
+}
 
-    const summary =
-        document.getElementById("summaryPlayers");
+.compare-ovr {
+    font-size: 64px;
+    line-height: 1;
 
+    font-weight: 900;
 
-    if (!summary) {
+    color: white;
 
-        showScreen("readyScreen");
+    text-shadow:
+        0 0 25px rgba(57,230,165,0.2);
+}
 
-        return;
-    }
+.compare-team:first-child .compare-ovr,
+.compare-team:last-child .compare-ovr {
+    color: #39e6a5;
+}
 
+/* ============================================================
+   VS
+   ============================================================ */
 
-    summary.innerHTML = "";
+.comparison-vs {
+    position: relative;
+    z-index: 3;
 
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    selectedPlayers.forEach(function(player) {
+    width: 90px;
+    height: 90px;
 
-        const score =
-            calculatePlayerOVR(player);
+    margin: auto;
 
+    border-radius: 50%;
 
-        const item =
-            document.createElement("div");
+    background: #07111f;
 
+    border: 2px solid #34465c;
 
-        item.className =
-            "summary-player";
+    color: white;
 
+    font-size: 24px;
+    font-weight: 900;
 
-        const ballonDorText =
-            player.ballonDorWins
-                ? ` • Ballon d'Or: ${player.ballonDorWins}`
-                : "";
+    box-shadow:
+        0 0 0 8px rgba(255,255,255,0.02),
+        0 10px 30px rgba(0,0,0,0.5);
+}
 
+/* ============================================================
+   TEAM OVR LABEL
+   ============================================================ */
 
-        item.innerHTML = `
+.compare-team::after {
+    content: "TEAM OVR";
 
-            <strong>
-                ${player.name}
-            </strong>
+    display: block;
 
-            <span>
+    margin-top: 10px;
 
-                ${player.position}
-                •
-                ${score.toFixed(1)}
+    font-size: 9px;
+    font-weight: bold;
 
-                ${ballonDorText}
+    letter-spacing: 2px;
 
-            </span>
+    color: #718096;
+}
 
-        `;
+/* ============================================================
+   STATS PANEL
+   ============================================================ */
 
+.comparison-stats {
+    margin-top: 25px;
 
-        summary.appendChild(item);
+    padding: 30px;
 
-    });
+    background: rgba(9,22,37,0.9);
 
+    border: 1px solid rgba(255,255,255,0.07);
 
-    showScreen("readyScreen");
+    border-radius: 18px;
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,0.25);
+}
+
+/* ============================================================
+   STAT ROW
+   ============================================================ */
+
+.comparison-stat {
+    margin-bottom: 23px;
+}
+
+.comparison-stat:last-child {
+    margin-bottom: 0;
+}
+
+.stat-title {
+    display: grid;
+
+    grid-template-columns: 70px 1fr 70px;
+
+    align-items: center;
+
+    margin-bottom: 8px;
+}
+
+.stat-value-left,
+.stat-value-right {
+    font-size: 15px;
+    font-weight: 900;
+}
+
+.stat-value-left {
+    text-align: left;
+}
+
+.stat-value-right {
+    text-align: right;
+}
+
+.stat-name {
+    text-align: center;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    letter-spacing: 2px;
+
+    color: #718096;
+}
+
+/* ============================================================
+   FIFA-STYLE STAT BAR
+   ============================================================ */
+
+.stat-bar {
+    position: relative;
+
+    width: 100%;
+    height: 9px;
+
+    background: #172536;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+}
+
+/*
+   Your JavaScript sets the width of the bar
+   according to Team 1's percentage.
+*/
+
+.stat-bar-fill {
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #39e6a5,
+            #7affc9
+        );
+
+    border-radius: 20px;
+
+    transition:
+        width 0.8s cubic-bezier(.22,1,.36,1);
+}
+
+/* ============================================================
+   PREDICTION
+   ============================================================ */
+
+.prediction-card {
+    position: relative;
+
+    margin-top: 30px;
+
+    padding: 40px 25px;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(18,45,62,0.95),
+            rgba(7,17,31,0.98)
+        );
+
+    border: 1px solid rgba(57,230,165,0.2);
+
+    border-radius: 18px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 20px 50px rgba(0,0,0,0.3);
+}
+
+/* Green glow */
+
+.prediction-card::before {
+    content: "";
+
+    position: absolute;
+
+    width: 300px;
+    height: 300px;
+
+    left: 50%;
+    top: -220px;
+
+    transform: translateX(-50%);
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(57,230,165,0.18),
+            transparent 70%
+        );
+
+    pointer-events: none;
+}
+
+.prediction-card h3 {
+    position: relative;
+
+    margin-bottom: 15px;
+
+    color: #718096;
+
+    font-size: 11px;
+
+    letter-spacing: 3px;
+
+    text-transform: uppercase;
+}
+
+#winnerText {
+    position: relative;
+
+    margin: 10px 0;
+
+    font-size: clamp(32px, 5vw, 52px);
+
+    font-weight: 900;
+
+    color: #39e6a5;
+
+    text-transform: uppercase;
+
+    text-shadow:
+        0 0 30px rgba(57,230,165,0.25);
+}
+
+#winnerReason {
+    position: relative;
+
+    max-width: 650px;
+
+    margin: 15px auto 0;
+
+    color: #8796a9;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+
+.comparison-buttons {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    margin-top: 25px;
+}
+
+.comparison-buttons button {
+    padding: 13px 25px;
+
+    border-radius: 8px;
+
+    border: 1px solid #26384d;
+
+    background: #101f31;
+
+    color: white;
+
+    font-weight: bold;
+
+    transition: 0.2s;
+}
+
+.comparison-buttons button:hover {
+    border-color: #39e6a5;
+
+    background: #153d39;
+
+    transform: translateY(-2px);
 }
 
 
-// ============================================================
-// RESTART
-// ============================================================
+/* ============================================================
+   MOBILE
+   ============================================================ */
 
-function restart() {
+@media (max-width: 700px) {
 
-    selectedTeam = null;
-    selectedFormation = null;
-    selectedPlayers = [];
-    currentFilter = "ALL";
+    .comparison-container {
+        padding: 25px 12px 45px;
+    }
 
-    showScreen("homeScreen");
+    .comparison-teams {
+        grid-template-columns: 1fr 70px 1fr;
+
+        min-height: 210px;
+
+        padding: 25px 5px;
+    }
+
+    .compare-team {
+        padding: 10px 5px;
+    }
+
+    .compare-team h2 {
+        font-size: 16px;
+    }
+
+    .compare-ovr {
+        font-size: 45px;
+    }
+
+    .comparison-vs {
+        width: 60px;
+        height: 60px;
+
+        font-size: 17px;
+    }
+
+    .comparison-stats {
+        padding: 22px 15px;
+    }
+
+    .stat-title {
+        grid-template-columns: 55px 1fr 55px;
+    }
+
+    .stat-value-left,
+    .stat-value-right {
+        font-size: 13px;
+    }
+
+    .stat-name {
+        font-size: 8px;
+        letter-spacing: 1px;
+    }
+
+    .prediction-card {
+        padding: 30px 18px;
+    }
+
+    #winnerText {
+        font-size: 30px;
+    }
+
 }
-
-
-// ============================================================
-// MAKE FUNCTIONS AVAILABLE TO HTML
-// ============================================================
-
-window.startMatch = startMatch;
-window.showScreen = showScreen;
-window.chooseTeam = chooseTeam;
-window.chooseFormation = chooseFormation;
-window.filterPlayers = filterPlayers;
-window.selectPlayer = selectPlayer;
-window.finishTeam = finishTeam;
-window.restart = restart;
