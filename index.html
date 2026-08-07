@@ -581,291 +581,519 @@
 
 
     <!-- ================================================= -->
-    <!-- COMPARISON SCREEN -->
-    <!-- ================================================= -->
+<!-- V2 COMPARISON + MATHEMATICAL PREDICTION SCREEN -->
+<!-- ================================================= -->
 
-    <section id="comparisonScreen" class="screen">
+<section id="comparisonScreen" class="screen">
 
-        <div class="comparison-container">
+    <div class="comparison-container">
+
+        <!-- ================================================= -->
+        <!-- HEADER -->
+        <!-- ================================================= -->
+
+        <div class="comparison-header">
 
             <h1>
-                TEAM COMPARISON
+                MATHEMATICAL MATCH ANALYSIS
             </h1>
 
             <p>
-                The numbers decide.
+                Compare both teams and calculate the mathematical prediction.
             </p>
 
+        </div>
 
-            <!-- ========================================= -->
-            <!-- TEAM HEADERS -->
-            <!-- ========================================= -->
 
-            <div class="versus-header">
+        <!-- ================================================= -->
+        <!-- TEAM VS TEAM -->
+        <!-- ================================================= -->
 
-                <div class="compare-team">
+        <div class="comparison-teams">
 
-                    <h2 id="compareTeam1">
-                        Team 1
-                    </h2>
+            <!-- TEAM 1 -->
 
-                    <div
-                        class="compare-ovr"
-                        id="compareOVR1">
-                        0.00
-                    </div>
+            <div class="compare-team">
 
-                </div>
-
-
-                <div class="vs">
-                    VS
-                </div>
-
-
-                <div class="compare-team">
-
-                    <h2 id="compareTeam2">
-                        Team 2
-                    </h2>
-
-                    <div
-                        class="compare-ovr"
-                        id="compareOVR2">
-                        0.00
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- ========================================= -->
-            <!-- STAT COMPARISON -->
-            <!-- ========================================= -->
-
-            <div class="comparison-card">
-
-                <h2>
-                    MATHEMATICAL COMPARISON
-                </h2>
-
-
-                <div class="stat-row">
-
-                    <span>
-                        ⚽ Attack
-                    </span>
-
-                    <strong id="attack1">
-                        0
-                    </strong>
-
-                    <div class="stat-bar">
-
-                        <div
-                            id="attackBar"
-                            class="stat-fill">
-                        </div>
-
-                    </div>
-
-                    <strong id="attack2">
-                        0
-                    </strong>
-
-                </div>
-
-
-                <div class="stat-row">
-
-                    <span>
-                        🛡️ Defence
-                    </span>
-
-                    <strong id="defence1">
-                        0
-                    </strong>
-
-                    <div class="stat-bar">
-
-                        <div
-                            id="defenceBar"
-                            class="stat-fill">
-                        </div>
-
-                    </div>
-
-                    <strong id="defence2">
-                        0
-                    </strong>
-
-                </div>
-
-
-                <div class="stat-row">
-
-                    <span>
-                        🎯 Passing
-                    </span>
-
-                    <strong id="passing1">
-                        0
-                    </strong>
-
-                    <div class="stat-bar">
-
-                        <div
-                            id="passingBar"
-                            class="stat-fill">
-                        </div>
-
-                    </div>
-
-                    <strong id="passing2">
-                        0
-                    </strong>
-
-                </div>
-
-
-                <div class="stat-row">
-
-                    <span>
-                        🪄 Dribbling
-                    </span>
-
-                    <strong id="dribbling1">
-                        0
-                    </strong>
-
-                    <div class="stat-bar">
-
-                        <div
-                            id="dribblingBar"
-                            class="stat-fill">
-                        </div>
-
-                    </div>
-
-                    <strong id="dribbling2">
-                        0
-                    </strong>
-
-                </div>
-
-
-                <div class="stat-row">
-
-                    <span>
-                        ⚡ Pace
-                    </span>
-
-                    <strong id="pace1">
-                        0
-                    </strong>
-
-                    <div class="stat-bar">
-
-                        <div
-                            id="paceBar"
-                            class="stat-fill">
-                        </div>
-
-                    </div>
-
-                    <strong id="pace2">
-                        0
-                    </strong>
-
-                </div>
-
-
-                <div class="stat-row">
-
-                    <span>
-                        💪 Stamina
-                    </span>
-
-                    <strong id="stamina1">
-                        0
-                    </strong>
-
-                    <div class="stat-bar">
-
-                        <div
-                            id="staminaBar"
-                            class="stat-fill">
-                        </div>
-
-                    </div>
-
-                    <strong id="stamina2">
-                        0
-                    </strong>
-
-                </div>
-
-            </div>
-
-
-            <!-- ========================================= -->
-            <!-- WINNER -->
-            <!-- ========================================= -->
-
-            <div class="winner-card">
-
-                <div class="winner-icon">
-                    🏆
-                </div>
-
-                <h2>
-                    MATHEMATICAL PREDICTION
+                <h2 id="compareTeam1">
+                    Team 1
                 </h2>
 
                 <div
-                    id="winnerText"
-                    class="winner-text">
-                    —
+                    class="compare-ovr"
+                    id="compareOVR1"
+                >
+                    0.00
                 </div>
-
-                <p id="winnerReason">
-                    —
-                </p>
 
             </div>
 
 
-            <!-- ========================================= -->
-            <!-- ACTION BUTTONS -->
-            <!-- ========================================= -->
+            <!-- VS -->
 
-            <div class="comparison-actions">
-
-                <button
-                    class="primary-btn"
-                    type="button"
-                    onclick="createSecondTeam()">
-
-                    CHANGE TEAM 2
-
-                </button>
+            <div class="comparison-vs">
+                VS
+            </div>
 
 
-                <button
-                    class="secondary-btn"
-                    type="button"
-                    onclick="restart()">
+            <!-- TEAM 2 -->
 
-                    NEW MATCH
+            <div class="compare-team">
 
-                </button>
+                <h2 id="compareTeam2">
+                    Team 2
+                </h2>
+
+                <div
+                    class="compare-ovr"
+                    id="compareOVR2"
+                >
+                    0.00
+                </div>
 
             </div>
 
         </div>
 
-    </section>
+
+        <!-- ================================================= -->
+        <!-- TEAM STATISTICS -->
+        <!-- ================================================= -->
+
+        <div class="comparison-stats">
+
+            <div class="comparison-section-title">
+
+                <span>
+                    TEAM ATTRIBUTES
+                </span>
+
+                <small>
+                    Average rating of the selected XI
+                </small>
+
+            </div>
+
+
+            <!-- ATTACK -->
+
+            <div class="comparison-stat">
+
+                <div class="stat-title">
+
+                    <strong
+                        class="stat-value-left"
+                        id="attack1"
+                    >
+                        0.0
+                    </strong>
+
+
+                    <span class="stat-name">
+                        ⚽ ATTACK
+                    </span>
+
+
+                    <strong
+                        class="stat-value-right"
+                        id="attack2"
+                    >
+                        0.0
+                    </strong>
+
+                </div>
+
+
+                <div class="stat-bar">
+
+                    <div
+                        id="attackBar"
+                        class="stat-bar-fill"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+            <!-- MIDFIELD -->
+
+            <div class="comparison-stat">
+
+                <div class="stat-title">
+
+                    <strong
+                        class="stat-value-left"
+                        id="midfield1"
+                    >
+                        0.0
+                    </strong>
+
+
+                    <span class="stat-name">
+                        🎯 MIDFIELD
+                    </span>
+
+
+                    <strong
+                        class="stat-value-right"
+                        id="midfield2"
+                    >
+                        0.0
+                    </strong>
+
+                </div>
+
+
+                <div class="stat-bar">
+
+                    <div
+                        id="midfieldBar"
+                        class="stat-bar-fill"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+            <!-- DEFENCE -->
+
+            <div class="comparison-stat">
+
+                <div class="stat-title">
+
+                    <strong
+                        class="stat-value-left"
+                        id="defence1"
+                    >
+                        0.0
+                    </strong>
+
+
+                    <span class="stat-name">
+                        🛡️ DEFENCE
+                    </span>
+
+
+                    <strong
+                        class="stat-value-right"
+                        id="defence2"
+                    >
+                        0.0
+                    </strong>
+
+                </div>
+
+
+                <div class="stat-bar">
+
+                    <div
+                        id="defenceBar"
+                        class="stat-bar-fill"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+            <!-- PHYSICAL -->
+
+            <div class="comparison-stat">
+
+                <div class="stat-title">
+
+                    <strong
+                        class="stat-value-left"
+                        id="physical1"
+                    >
+                        0.0
+                    </strong>
+
+
+                    <span class="stat-name">
+                        💪 PHYSICAL
+                    </span>
+
+
+                    <strong
+                        class="stat-value-right"
+                        id="physical2"
+                    >
+                        0.0
+                    </strong>
+
+                </div>
+
+
+                <div class="stat-bar">
+
+                    <div
+                        id="physicalBar"
+                        class="stat-bar-fill"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+            <!-- OVERALL -->
+
+            <div class="comparison-stat">
+
+                <div class="stat-title">
+
+                    <strong
+                        class="stat-value-left"
+                        id="overall1"
+                    >
+                        0.0
+                    </strong>
+
+
+                    <span class="stat-name">
+                        ⭐ OVERALL
+                    </span>
+
+
+                    <strong
+                        class="stat-value-right"
+                        id="overall2"
+                    >
+                        0.0
+                    </strong>
+
+                </div>
+
+
+                <div class="stat-bar">
+
+                    <div
+                        id="overallBar"
+                        class="stat-bar-fill"
+                    ></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- WIN PROBABILITY -->
+        <!-- ================================================= -->
+
+        <div class="probability-card">
+
+            <div class="comparison-section-title">
+
+                <span>
+                    WIN PROBABILITY
+                </span>
+
+                <small>
+                    Calculated from the V2 mathematical model
+                </small>
+
+            </div>
+
+
+            <div class="probability-grid">
+
+                <!-- TEAM 1 -->
+
+                <div class="probability-item">
+
+                    <span id="probTeam1Name">
+                        Team 1
+                    </span>
+
+                    <strong id="winProb1">
+                        0%
+                    </strong>
+
+                </div>
+
+
+                <!-- DRAW -->
+
+                <div class="probability-item draw">
+
+                    <span>
+                        DRAW
+                    </span>
+
+                    <strong id="drawProb">
+                        0%
+                    </strong>
+
+                </div>
+
+
+                <!-- TEAM 2 -->
+
+                <div class="probability-item">
+
+                    <span id="probTeam2Name">
+                        Team 2
+                    </span>
+
+                    <strong id="winProb2">
+                        0%
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- PROBABILITY BAR -->
+
+            <div class="probability-bar">
+
+                <div
+                    id="probBar1"
+                ></div>
+
+
+                <div
+                    id="probBarDraw"
+                ></div>
+
+
+                <div
+                    id="probBar2"
+                ></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- EXPECTED GOALS -->
+        <!-- ================================================= -->
+
+        <div class="xg-card">
+
+            <div class="comparison-section-title">
+
+                <span>
+                    EXPECTED GOALS
+                </span>
+
+                <small>
+                    Estimated goals produced by the model
+                </small>
+
+            </div>
+
+
+            <div class="xg-grid">
+
+                <!-- TEAM 1 -->
+
+                <div>
+
+                    <span id="xgTeam1Name">
+                        Team 1
+                    </span>
+
+                    <strong id="xg1">
+                        0.00
+                    </strong>
+
+                </div>
+
+
+                <!-- VS -->
+
+                <div class="xg-vs">
+                    ×
+                </div>
+
+
+                <!-- TEAM 2 -->
+
+                <div>
+
+                    <span id="xgTeam2Name">
+                        Team 2
+                    </span>
+
+                    <strong id="xg2">
+                        0.00
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- MATHEMATICAL PREDICTION -->
+        <!-- ================================================= -->
+
+        <div class="prediction-card">
+
+            <h3>
+                MATHEMATICAL PREDICTION
+            </h3>
+
+
+            <div id="winnerText">
+                —
+            </div>
+
+
+            <p id="winnerReason">
+                —
+            </p>
+
+
+            <!-- MODEL BREAKDOWN -->
+
+            <div
+                id="modelBreakdown"
+                class="model-breakdown"
+            ></div>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- BUTTONS -->
+        <!-- ================================================= -->
+
+        <div class="comparison-buttons">
+
+            <button
+                class="primary-btn"
+                type="button"
+                onclick="createSecondTeam()"
+            >
+                CHANGE TEAM 2
+            </button>
+
+
+            <button
+                class="secondary-btn"
+                type="button"
+                onclick="restart()"
+            >
+                NEW MATCH
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
 
 
     <!-- ================================================= -->
