@@ -1809,7 +1809,6 @@ const formationRequirements = {
         MID: 5,
         FWD: 2
     }
-
 };
 
 // ============================================================
@@ -3722,3 +3721,1321 @@ window.showComparison =
 
 window.goBackFromBuilder =
     goBackFromBuilder;
+
+// ============================================================
+// V3 - MATCH SETUP
+// ============================================================
+
+function showMatchSetup() {
+
+    if (!team1 || !team2) {
+
+        alert("Both teams must be created first.");
+
+        return;
+    }
+
+    // --------------------------------------------------------
+    // TEAM NAMES
+    // --------------------------------------------------------
+
+    setText(
+        "setupTeam1",
+        team1.name
+    );
+
+    setText(
+        "setupTeam2",
+        team2.name
+    );
+
+
+    // --------------------------------------------------------
+    // OVR
+    // --------------------------------------------------------
+
+    setText(
+        "setupOVR1",
+        team1.ovr.toFixed(2)
+    );
+
+    setText(
+        "setupOVR2",
+        team2.ovr.toFixed(2)
+    );
+
+
+    // --------------------------------------------------------
+    // FORMATIONS
+    // --------------------------------------------------------
+
+    setText(
+        "setupFormation1",
+        team1.formation
+    );
+
+    setText(
+        "setupFormation2",
+        team2.formation
+    );
+
+
+    // --------------------------------------------------------
+    // PLAYER LISTS
+    // --------------------------------------------------------
+
+    const list1 =
+        document.getElementById("setupPlayers1");
+
+    const list2 =
+        document.getElementById("setupPlayers2");
+
+
+    if (list1) {
+
+        list1.innerHTML = "";
+
+        team1.players.forEach(function(player) {
+
+            const item =
+                document.createElement("div");
+
+            item.className =
+                "summary-player";
+
+            item.innerHTML = `
+
+                <strong>
+                    ${player.name}
+                </strong>
+
+                <span>
+                    ${player.position}
+                    •
+                    ${calculatePlayerOVR(player).toFixed(1)}
+                </span>
+
+            `;
+
+            list1.appendChild(item);
+
+        });
+
+    }
+
+
+    if (list2) {
+
+        list2.innerHTML = "";
+
+        team2.players.forEach(function(player) {
+
+            const item =
+                document.createElement("div");
+
+            item.className =
+                "summary-player";
+
+            item.innerHTML = `
+
+                <strong>
+                    ${player.name}
+                </strong>
+
+                <span>
+                    ${player.position}
+                    •
+                    ${calculatePlayerOVR(player).toFixed(1)}
+                </span>
+
+            `;
+
+            list2.appendChild(item);
+
+        });
+
+    }
+
+
+    // --------------------------------------------------------
+    // SHOW SCREEN
+    // --------------------------------------------------------
+
+    showScreen("matchSetupScreen");
+}
+
+
+// ============================================================
+// V3 - MATCH SETUP
+// ============================================================
+
+function showMatchSetup() {
+
+    if (!team1 || !team2) {
+
+        alert("Both teams must be created first.");
+
+        return;
+    }
+
+    // --------------------------------------------------------
+    // TEAM NAMES
+    // --------------------------------------------------------
+
+    setText(
+        "setupTeam1",
+        team1.name
+    );
+
+    setText(
+        "setupTeam2",
+        team2.name
+    );
+
+    // --------------------------------------------------------
+    // OVR
+    // --------------------------------------------------------
+
+    setText(
+        "setupOVR1",
+        team1.ovr.toFixed(2)
+    );
+
+    setText(
+        "setupOVR2",
+        team2.ovr.toFixed(2)
+    );
+
+    // --------------------------------------------------------
+    // FORMATIONS
+    // --------------------------------------------------------
+
+    setText(
+        "setupFormation1",
+        team1.formation
+    );
+
+    setText(
+        "setupFormation2",
+        team2.formation
+    );
+
+    // --------------------------------------------------------
+    // PLAYER LISTS
+    // --------------------------------------------------------
+
+    const list1 =
+        document.getElementById("setupPlayers1");
+
+    const list2 =
+        document.getElementById("setupPlayers2");
+
+    if (list1) {
+
+        list1.innerHTML = "";
+
+        team1.players.forEach(function(player) {
+
+            const item =
+                document.createElement("div");
+
+            item.className =
+                "summary-player";
+
+            item.innerHTML = `
+
+                <strong>
+                    ${player.name}
+                </strong>
+
+                <span>
+                    ${player.position}
+                    •
+                    ${calculatePlayerOVR(player).toFixed(1)}
+                </span>
+
+            `;
+
+            list1.appendChild(item);
+
+        });
+
+    }
+
+    if (list2) {
+
+        list2.innerHTML = "";
+
+        team2.players.forEach(function(player) {
+
+            const item =
+                document.createElement("div");
+
+            item.className =
+                "summary-player";
+
+            item.innerHTML = `
+
+                <strong>
+                    ${player.name}
+                </strong>
+
+                <span>
+                    ${player.position}
+                    •
+                    ${calculatePlayerOVR(player).toFixed(1)}
+                </span>
+
+            `;
+
+            list2.appendChild(item);
+
+        });
+
+    }
+
+    // --------------------------------------------------------
+    // SHOW SETUP SCREEN
+    // --------------------------------------------------------
+
+    showScreen("matchSetupScreen");
+}
+
+
+// ============================================================
+// V3 - SIMULATION STATE
+// ============================================================
+
+let matchMinute = 0;
+
+let matchScore1 = 0;
+let matchScore2 = 0;
+
+let matchRunning = false;
+
+let matchInterval = null;
+
+let matchEvents = [];
+
+let team1Stats = null;
+let team2Stats = null;
+
+let matchPrediction = null;
+
+
+// ============================================================
+// V3 - START SIMULATION
+// ============================================================
+
+function startSimulation() {
+
+    if (!team1 || !team2) {
+
+        alert("Both teams must be created first.");
+
+        return;
+    }
+
+    // --------------------------------------------------------
+    // RESET MATCH
+    // --------------------------------------------------------
+
+    matchMinute = 0;
+
+    matchScore1 = 0;
+
+    matchScore2 = 0;
+
+    matchEvents = [];
+
+    matchRunning = true;
+
+
+    // --------------------------------------------------------
+    // CALCULATE TEAM STATS ONCE
+    // --------------------------------------------------------
+
+    team1Stats =
+        calculateTeamStats(team1);
+
+    team2Stats =
+        calculateTeamStats(team2);
+
+
+    matchPrediction =
+        calculatePrediction(
+            team1Stats,
+            team2Stats
+        );
+
+
+    // --------------------------------------------------------
+    // CLEAR OLD TIMER
+    // --------------------------------------------------------
+
+    if (matchInterval) {
+
+        clearInterval(matchInterval);
+
+        matchInterval = null;
+
+    }
+
+
+    // --------------------------------------------------------
+    // SHOW LIVE MATCH
+    // --------------------------------------------------------
+
+    showScreen("liveMatchScreen");
+
+
+    // --------------------------------------------------------
+    // INITIAL DISPLAY
+    // --------------------------------------------------------
+
+    updateMatchDisplay();
+
+
+    // --------------------------------------------------------
+    // KICK OFF EVENT
+    // --------------------------------------------------------
+
+    addCommentaryEvent(
+        0,
+        "KICK OFF",
+        `${team1.name} vs ${team2.name} has started.`
+    );
+
+
+    updateMatchDisplay();
+
+
+    // --------------------------------------------------------
+    // SIMULATION SPEED
+    // --------------------------------------------------------
+
+    matchInterval = setInterval(
+        simulateMinute,
+        150
+    );
+}
+
+
+// ============================================================
+// V3 - SIMULATE MINUTE
+// ============================================================
+
+function simulateMinute() {
+
+    if (!matchRunning) {
+
+        return;
+    }
+
+
+    matchMinute++;
+
+
+    // --------------------------------------------------------
+    // STOP AFTER 90 MINUTES
+    // --------------------------------------------------------
+
+    if (matchMinute > 90) {
+
+        endMatch();
+
+        return;
+    }
+
+
+    // --------------------------------------------------------
+    // TEAM STRENGTH
+    // --------------------------------------------------------
+
+    const stats1 =
+        team1Stats;
+
+    const stats2 =
+        team2Stats;
+
+    const prediction =
+        matchPrediction;
+
+
+    // --------------------------------------------------------
+    // GOAL PROBABILITY
+    // --------------------------------------------------------
+
+    /*
+        We convert expected goals into a Poisson-style
+        probability.
+
+        This gives the simulator a more natural chance
+        of producing goals during the match.
+    */
+
+    const baseChance1 =
+        1 -
+        Math.exp(
+            -prediction.xg1 / 90
+        );
+
+    const baseChance2 =
+        1 -
+        Math.exp(
+            -prediction.xg2 / 90
+        );
+
+
+    // --------------------------------------------------------
+    // ATTACK MOMENT
+    // --------------------------------------------------------
+
+    const attackRoll =
+        Math.random();
+
+
+    /*
+        About 20% of minutes produce some sort of
+        meaningful commentary.
+    */
+
+    if (attackRoll < 0.20) {
+
+        generateMatchEvent();
+
+    }
+
+
+    // --------------------------------------------------------
+    // TEAM 1 GOAL
+    // --------------------------------------------------------
+
+    /*
+        Small attacking modifier based on the team's
+        attacking strength.
+    */
+
+    const attackModifier1 =
+        clamp(
+            1 +
+            (
+                stats1.attack -
+                stats2.defence
+            ) / 250,
+            0.75,
+            1.25
+        );
+
+
+    const goalChance1 =
+        baseChance1 *
+        attackModifier1;
+
+
+    if (
+        Math.random() <
+        goalChance1
+    ) {
+
+        scoreGoal(1);
+
+    }
+
+
+    // --------------------------------------------------------
+    // TEAM 2 GOAL
+    // --------------------------------------------------------
+
+    const attackModifier2 =
+        clamp(
+            1 +
+            (
+                stats2.attack -
+                stats1.defence
+            ) / 250,
+            0.75,
+            1.25
+        );
+
+
+    const goalChance2 =
+        baseChance2 *
+        attackModifier2;
+
+
+    if (
+        Math.random() <
+        goalChance2
+    ) {
+
+        scoreGoal(2);
+
+    }
+
+
+    // --------------------------------------------------------
+    // UPDATE SCREEN
+    // --------------------------------------------------------
+
+    updateMatchDisplay();
+
+
+    // --------------------------------------------------------
+    // END MATCH
+    // --------------------------------------------------------
+
+    if (matchMinute >= 90) {
+
+        endMatch();
+
+    }
+}
+
+// ============================================================
+// V3 - REALISTIC MATCH COMMENTARY
+// ============================================================
+
+function generateMatchEvent() {
+
+    if (!team1 || !team2 || !team1Stats || !team2Stats) {
+        return;
+    }
+
+    // --------------------------------------------------------
+    // CHOOSE ATTACKING TEAM
+    // --------------------------------------------------------
+
+    const attack1 = team1Stats.attack;
+    const attack2 = team2Stats.attack;
+
+    const totalAttack = attack1 + attack2;
+
+    let attackingTeam;
+    let defendingTeam;
+    let attackingStats;
+    let defendingStats;
+
+    if (totalAttack <= 0) {
+
+        if (Math.random() < 0.5) {
+            attackingTeam = team1;
+            defendingTeam = team2;
+            attackingStats = team1Stats;
+            defendingStats = team2Stats;
+        } else {
+            attackingTeam = team2;
+            defendingTeam = team1;
+            attackingStats = team2Stats;
+            defendingStats = team1Stats;
+        }
+
+    } else {
+
+        const team1Chance =
+            attack1 / totalAttack;
+
+        if (Math.random() < team1Chance) {
+
+            attackingTeam = team1;
+            defendingTeam = team2;
+
+            attackingStats = team1Stats;
+            defendingStats = team2Stats;
+
+        } else {
+
+            attackingTeam = team2;
+            defendingTeam = team1;
+
+            attackingStats = team2Stats;
+            defendingStats = team1Stats;
+        }
+    }
+
+    // --------------------------------------------------------
+    // SELECT PLAYERS
+    // --------------------------------------------------------
+
+    const forwards =
+        attackingTeam.players.filter(function(player) {
+            return player.position === "FWD";
+        });
+
+    const midfielders =
+        attackingTeam.players.filter(function(player) {
+            return player.position === "MID";
+        });
+
+    const defenders =
+        defendingTeam.players.filter(function(player) {
+            return player.position === "DEF";
+        });
+
+    const allAttackers =
+        forwards.length > 0
+            ? forwards
+            : attackingTeam.players;
+
+    const attacker =
+        allAttackers[
+            Math.floor(
+                Math.random() *
+                allAttackers.length
+            )
+        ];
+
+    const midfielder =
+        midfielders.length > 0
+            ? midfielders[
+                Math.floor(
+                    Math.random() *
+                    midfielders.length
+                )
+            ]
+            : attacker;
+
+    const defender =
+        defenders.length > 0
+            ? defenders[
+                Math.floor(
+                    Math.random() *
+                    defenders.length
+                )
+            ]
+            : null;
+
+
+    // --------------------------------------------------------
+    // STRENGTH DIFFERENCE
+    // --------------------------------------------------------
+
+    const attackingAdvantage =
+        attackingStats.attack -
+        defendingStats.defence;
+
+
+    const midfieldAdvantage =
+        attackingStats.midfield -
+        defendingStats.midfield;
+
+
+    // --------------------------------------------------------
+    // MATCH SITUATION
+    // --------------------------------------------------------
+
+    const scoreDifference =
+        attackingTeam === team1
+            ? matchScore1 - matchScore2
+            : matchScore2 - matchScore1;
+
+
+    // --------------------------------------------------------
+    // LATE MATCH DRAMA
+    // --------------------------------------------------------
+
+    if (matchMinute >= 75) {
+
+        // Losing team pushes forward
+        if (scoreDifference < 0) {
+
+            const lateChance =
+                Math.random();
+
+            if (lateChance < 0.30) {
+
+                addCommentaryEvent(
+                    matchMinute,
+                    "PRESSURE",
+                    `${attackingTeam.name} are throwing everything forward as they search for an equaliser.`
+                );
+
+                return;
+            }
+
+            if (lateChance < 0.50) {
+
+                addCommentaryEvent(
+                    matchMinute,
+                    "CROWD",
+                    `The pressure is building with the clock running down.`
+                );
+
+                return;
+            }
+        }
+
+        // Winning team tries to control game
+        if (scoreDifference > 0) {
+
+            if (Math.random() < 0.30) {
+
+                addCommentaryEvent(
+                    matchMinute,
+                    "CONTROL",
+                    `${attackingTeam.name} are slowing the game down and trying to protect their lead.`
+                );
+
+                return;
+            }
+        }
+    }
+
+
+    // --------------------------------------------------------
+    // VERY EARLY MATCH
+    // --------------------------------------------------------
+
+    if (matchMinute <= 10) {
+
+        if (Math.random() < 0.50) {
+
+            addCommentaryEvent(
+                matchMinute,
+                "POSSESSION",
+                `${attackingTeam.name} settle into possession and look to control the early stages.`
+            );
+
+            return;
+        }
+    }
+
+
+    // --------------------------------------------------------
+    // CHANCE
+    // --------------------------------------------------------
+
+    const chanceProbability =
+        clamp(
+            0.30 +
+            attackingAdvantage / 200,
+            0.15,
+            0.55
+        );
+
+
+    if (Math.random() < chanceProbability) {
+
+        const chanceType =
+            Math.random();
+
+
+        if (chanceType < 0.30) {
+
+            addCommentaryEvent(
+                matchMinute,
+                "CHANCE",
+                `${attacker.name} finds space and creates a dangerous opportunity for ${attackingTeam.name}.`
+            );
+
+            return;
+        }
+
+
+        if (chanceType < 0.55) {
+
+            addCommentaryEvent(
+                matchMinute,
+                "ATTACK",
+                `${attackingTeam.name} break forward quickly through ${attacker.name}.`
+            );
+
+            return;
+        }
+
+
+        if (chanceType < 0.75) {
+
+            addCommentaryEvent(
+                matchMinute,
+                "CROSS",
+                `${attacker.name} delivers a dangerous ball into the box for ${attackingTeam.name}.`
+            );
+
+            return;
+        }
+
+
+        addCommentaryEvent(
+            matchMinute,
+            "SHOT",
+            `${attacker.name} takes a shot from outside the box, but it goes wide.`
+        );
+
+        return;
+    }
+
+
+    // --------------------------------------------------------
+    // MIDFIELD BATTLE
+    // --------------------------------------------------------
+
+    if (
+        midfieldAdvantage > 5 &&
+        Math.random() < 0.35
+    ) {
+
+        addCommentaryEvent(
+            matchMinute,
+            "MIDFIELD",
+            `${midfielder.name} helps ${attackingTeam.name} dominate the midfield and keep possession.`
+        );
+
+        return;
+    }
+
+
+    // --------------------------------------------------------
+    // DEFENSIVE ACTION
+    // --------------------------------------------------------
+
+    if (Math.random() < 0.30) {
+
+        if (defender) {
+
+            addCommentaryEvent(
+                matchMinute,
+                "DEFENCE",
+                `${defender.name} makes an important defensive intervention for ${defendingTeam.name}.`
+            );
+
+        } else {
+
+            addCommentaryEvent(
+                matchMinute,
+                "DEFENCE",
+                `${defendingTeam.name} defend well and stop the attack.`
+            );
+        }
+
+        return;
+    }
+
+
+    // --------------------------------------------------------
+    // GOALKEEPER SAVE
+    // --------------------------------------------------------
+
+    if (Math.random() < 0.35) {
+
+        addCommentaryEvent(
+            matchMinute,
+            "SAVE",
+            `${defendingTeam.name}'s goalkeeper reacts quickly and makes a good save.`
+        );
+
+        return;
+    }
+
+
+    // --------------------------------------------------------
+    // COUNTER ATTACK
+    // --------------------------------------------------------
+
+    if (Math.random() < 0.30) {
+
+        addCommentaryEvent(
+            matchMinute,
+            "COUNTER",
+            `${attackingTeam.name} launch a quick counter-attack after winning the ball back.`
+        );
+
+        return;
+    }
+
+
+    // --------------------------------------------------------
+    // POSSESSION
+    // --------------------------------------------------------
+
+    addCommentaryEvent(
+        matchMinute,
+        "POSSESSION",
+        `${attackingTeam.name} circulate the ball patiently and look for an opening.`
+    );
+}
+
+// ============================================================
+// V3 - GOAL
+// ============================================================
+
+function scoreGoal(teamNumber) {
+
+    let scoringTeam;
+    let opposingTeam;
+
+
+    if (teamNumber === 1) {
+
+        matchScore1++;
+
+        scoringTeam = team1;
+
+        opposingTeam = team2;
+
+    } else {
+
+        matchScore2++;
+
+        scoringTeam = team2;
+
+        opposingTeam = team1;
+
+    }
+
+
+    // --------------------------------------------------------
+    // SELECT SCORER
+    // --------------------------------------------------------
+
+    const attackers =
+        scoringTeam.players.filter(
+            function(player) {
+
+                return (
+                    player.position === "FWD" ||
+                    player.position === "MID"
+                );
+
+            }
+        );
+
+
+    let candidates =
+        attackers;
+
+
+    if (
+        !candidates ||
+        candidates.length === 0
+    ) {
+
+        candidates =
+            scoringTeam.players;
+
+    }
+
+
+    const scorer =
+        candidates[
+            Math.floor(
+                Math.random() *
+                candidates.length
+            )
+        ];
+
+
+    // --------------------------------------------------------
+    // GOAL EVENT
+    // --------------------------------------------------------
+
+    matchEvents.push({
+
+        minute: matchMinute,
+
+        type: "GOAL",
+
+        team: scoringTeam.name,
+
+        opponent: opposingTeam.name,
+
+        scorer: scorer.name,
+
+        message:
+            `${scorer.name} scores for ${scoringTeam.name}!`
+
+    });
+}
+
+
+// ============================================================
+// V3 - COMMENTARY EVENT
+// ============================================================
+
+function addCommentaryEvent(
+    minute,
+    type,
+    message
+) {
+
+    matchEvents.push({
+
+        minute: minute,
+
+        type: type,
+
+        team: "",
+
+        opponent: "",
+
+        scorer: "",
+
+        message: message
+
+    });
+}
+
+
+// ============================================================
+// V3 - UPDATE MATCH DISPLAY
+// ============================================================
+
+function updateMatchDisplay() {
+
+    // --------------------------------------------------------
+    // MINUTE
+    // --------------------------------------------------------
+
+    setText(
+        "matchMinute",
+        matchMinute
+    );
+
+
+    // --------------------------------------------------------
+    // TEAM NAMES
+    // --------------------------------------------------------
+
+    setText(
+        "liveTeam1",
+        team1
+            ? team1.name
+            : "Team 1"
+    );
+
+
+    setText(
+        "liveTeam2",
+        team2
+            ? team2.name
+            : "Team 2"
+    );
+
+
+    // --------------------------------------------------------
+    // SCORE
+    // --------------------------------------------------------
+
+    setText(
+        "liveScore1",
+        matchScore1
+    );
+
+
+    setText(
+        "liveScore2",
+        matchScore2
+    );
+
+
+    // --------------------------------------------------------
+    // EVENT LIST
+    // --------------------------------------------------------
+
+    const eventList =
+        document.getElementById("matchEvents");
+
+
+    if (!eventList) {
+
+        return;
+    }
+
+
+    eventList.innerHTML = "";
+
+
+    matchEvents
+        .slice()
+        .reverse()
+        .forEach(
+            function(event) {
+
+                const item =
+                    document.createElement("div");
+
+
+                item.className =
+                    "match-event";
+
+
+                let icon = "⚽";
+
+
+                if (event.type === "CHANCE") {
+
+                    icon = "🎯";
+
+                } else if (
+                    event.type === "SAVE"
+                ) {
+
+                    icon = "🧤";
+
+                } else if (
+                    event.type === "ATTACK"
+                ) {
+
+                    icon = "⚡";
+
+                } else if (
+                    event.type === "POSSESSION"
+                ) {
+
+                    icon = "🔵";
+
+                } else if (
+                    event.type === "KICK OFF"
+                ) {
+
+                    icon = "🏁";
+
+                }
+
+
+                item.innerHTML = `
+
+                    <span>
+                        ${event.minute}'
+                    </span>
+
+                    <strong>
+                        ${icon}
+                        ${event.type}
+                    </strong>
+
+                    <small>
+                        ${event.message}
+                    </small>
+
+                `;
+
+
+                eventList.appendChild(item);
+
+            }
+        );
+}
+
+
+// ============================================================
+// V3 - END MATCH
+// ============================================================
+
+function endMatch() {
+
+    if (!matchRunning) {
+
+        return;
+    }
+
+
+    matchRunning = false;
+
+
+    // --------------------------------------------------------
+    // CLEAR TIMER
+    // --------------------------------------------------------
+
+    if (matchInterval) {
+
+        clearInterval(matchInterval);
+
+        matchInterval = null;
+
+    }
+
+
+    // --------------------------------------------------------
+    // FINAL EVENT
+    // --------------------------------------------------------
+
+    addCommentaryEvent(
+        90,
+        "FULL TIME",
+        `${team1.name} ${matchScore1} - ${matchScore2} ${team2.name}`
+    );
+
+
+    // --------------------------------------------------------
+    // FINAL TEAM NAMES
+    // --------------------------------------------------------
+
+    setText(
+        "finalTeam1",
+        team1.name
+    );
+
+    setText(
+        "finalTeam2",
+        team2.name
+    );
+
+
+    // --------------------------------------------------------
+    // FINAL SCORE
+    // --------------------------------------------------------
+
+    setText(
+        "finalScore1",
+        matchScore1
+    );
+
+    setText(
+        "finalScore2",
+        matchScore2
+    );
+
+
+    // --------------------------------------------------------
+    // RESULT
+    // --------------------------------------------------------
+
+    let resultText =
+        "🤝 DRAW";
+
+
+    if (
+        matchScore1 >
+        matchScore2
+    ) {
+
+        resultText =
+            `🏆 ${team1.name}`;
+
+    } else if (
+        matchScore2 >
+        matchScore1
+    ) {
+
+        resultText =
+            `🏆 ${team2.name}`;
+
+    }
+
+
+    setText(
+        "finalWinner",
+        resultText
+    );
+
+
+    // --------------------------------------------------------
+    // SHOW RESULT
+    // --------------------------------------------------------
+
+    showScreen(
+        "matchResultScreen"
+    );
+}
+
+
+// ============================================================
+// V3 - BUTTON FUNCTIONS
+// ============================================================
+
+window.showMatchSetup =
+    showMatchSetup;
+
+window.startSimulation =
+    startSimulation;
